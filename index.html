@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blak Ginja Invoice Creator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { background: #FAF7F2; font-family: 'DM Sans', Arial, sans-serif; }
+  a { color: #C46D08; text-decoration: none; }
+  a:hover { color: #E8820C; }
+  input, select, button { font-family: 'DM Sans', Arial, sans-serif; }
+  @keyframes chipPop { 0% { transform: scale(1); } 40% { transform: scale(1.12); } 100% { transform: scale(1); } }
+  input[type="date"] { min-width: 0; }
+
+  /* Focus states (ported from prototype style-focus) */
+  .inp:focus { border-color: #E8820C; box-shadow: 0 0 0 3px rgba(232,130,12,0.14); }
+  .inp-sm:focus { border-color: #E8820C; }
+
+  /* Catalog chips (ported from prototype style-hover / style-active / flash) */
+  .chip {
+    padding: 5px 12px; border: 1px solid #E3D9C8; border-radius: 999px;
+    background: #FFFFFF; color: #1C1C1C; font-size: 12.5px; cursor: pointer;
+    transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .chip.flash { background: #EEF5E8; border-color: #3A6B1A; color: #3A6B1A; animation: chipPop 0.35s ease; }
+  .chip:hover {
+    border-color: #E8820C; color: #C46D08; background: #FDF3E3;
+    transform: translateY(-1px); box-shadow: 0 2px 8px rgba(232,130,12,0.25);
+  }
+  .chip:active { transform: scale(0.92); }
+
+  /* Buttons (ported from prototype style-hover) */
+  .btn-add { padding: 8px 14px; border: none; border-radius: 6px; background: #E8820C; color: #FFFFFF; font-size: 13px; font-weight: 600; cursor: pointer; }
+  .btn-add:hover { background: #C46D08; }
+  .btn-disc { padding: 7px 12px; border: 1px solid #D4B896; border-radius: 6px; background: #FFFFFF; color: #1C1C1C; font-size: 12.5px; font-weight: 500; cursor: pointer; }
+  .btn-disc:hover { background: #FDF3E3; border-color: #E8820C; }
+  .btn-x { width: 24px; height: 24px; border: none; border-radius: 50%; background: transparent; color: #5A5548; font-size: 16px; line-height: 1; cursor: pointer; padding: 0; }
+  .btn-x:hover { background: #FDF3E3; color: #C46D08; }
+  .btn-pdf { flex: 1; background: #E8820C; color: #FFFFFF; border: none; border-radius: 8px; padding: 13px 16px; font-size: 14.5px; font-weight: 600; cursor: pointer; letter-spacing: 0.2px; }
+  .btn-pdf:hover { background: #C46D08; }
+  .btn-pdf:disabled { opacity: 0.7; cursor: default; }
+  .btn-print { background: #FFFFFF; color: #1C1C1C; border: 1px solid #D4B896; border-radius: 8px; padding: 13px 18px; font-size: 14.5px; font-weight: 500; cursor: pointer; }
+  .btn-print:hover { background: #FDF3E3; }
+
+  @media (max-width: 980px) {
+    #app { flex-direction: column !important; height: auto !important; overflow: visible !important; }
+    #editor-panel { width: 100% !important; height: auto !important; border-right: none !important; border-bottom: 1px solid #EAE2D4; }
+    #editor-scroll { overflow: visible !important; }
+    #action-bar { position: fixed !important; left: 0; right: 0; bottom: 0; z-index: 60; box-shadow: 0 -4px 20px rgba(60,45,20,0.12); }
+    #preview-wrap { padding: 20px 12px 110px 12px !important; height: auto !important; }
+    #invoice-page { width: 100% !important; padding: 28px 22px !important; }
+  }
+  @media print {
+    body { background: #FFFFFF !important; }
+    #editor-panel, #action-bar { display: none !important; }
+    #app { display: block !important; height: auto !important; overflow: visible !important; }
+    #preview-wrap { padding: 0 !important; overflow: visible !important; background: #FFFFFF !important; }
+    #invoice-page { box-shadow: none !important; margin: 0 auto !important; width: 100% !important; max-width: 794px; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  }
+</style>
+</head>
+<body>
+<div id="app" style="display:flex; height:100vh; overflow:hidden; background:#FAF7F2; color:#1C1C1C; font-family:'DM Sans', Arial, sans-serif; font-size:14px; line-height:1.5;">
+
+  <!-- ══════════ EDITOR PANEL ══════════ -->
+  <div id="editor-panel" style="width:440px; flex-shrink:0; background:#FFFFFF; border-right:1px solid #EAE2D4; display:flex; flex-direction:column;">
+    <div id="editor-scroll" style="flex:1; overflow-y:auto; min-height:0;">
+
+      <div style="display:flex; align-items:center; gap:12px; padding:16px 20px; border-bottom:1px solid #F0E9DC;">
+        <img src="logo.png" alt="Blak Ginja logo" onerror="brandLogoFallback(this)" style="width:46px; height:46px; object-fit:contain;">
+        <div>
+          <div style="font-family:'Playfair Display', Georgia, serif; font-size:18px; font-weight:700; line-height:1.15;">Blak <span style="color:#E8820C;">Ginja</span></div>
+          <div style="font-size:11.5px; color:#5A5548; margin-top:1px;">Invoice creator</div>
+        </div>
+      </div>
+
+      <!-- Invoice details -->
+      <div style="padding:16px 20px; border-bottom:1px solid #F0E9DC;">
+        <div style="font-size:11px; font-weight:600; letter-spacing:1.6px; text-transform:uppercase; color:#C46D08; margin-bottom:10px;">Invoice details</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+          <div>
+            <label style="display:block; font-size:12px; font-weight:500; color:#5A5548; margin-bottom:4px;">Invoice number</label>
+            <input id="inp-invno" type="text" class="inp" style="width:100%; padding:8px 10px; border:1px solid #E3D9C8; border-radius:6px; font-size:13.5px; color:#1C1C1C; background:#FFFFFF; outline:none;">
+          </div>
+          <div>
+            <label style="display:block; font-size:12px; font-weight:500; color:#5A5548; margin-bottom:4px;">Date</label>
+            <input id="inp-date" type="date" class="inp" style="width:100%; padding:8px 10px; border:1px solid #E3D9C8; border-radius:6px; font-size:13.5px; color:#1C1C1C; background:#FFFFFF; outline:none;">
+          </div>
+        </div>
+      </div>
+
+      <!-- Bill to -->
+      <div style="padding:16px 20px; border-bottom:1px solid #F0E9DC;">
+        <div style="font-size:11px; font-weight:600; letter-spacing:1.6px; text-transform:uppercase; color:#C46D08; margin-bottom:10px;">Bill to</div>
+        <div style="margin-bottom:10px;">
+          <label style="display:block; font-size:12px; font-weight:500; color:#5A5548; margin-bottom:4px;">Client name</label>
+          <input id="inp-clientname" type="text" class="inp" placeholder="Client or company name" style="width:100%; padding:8px 10px; border:1px solid #E3D9C8; border-radius:6px; font-size:13.5px; color:#1C1C1C; background:#FFFFFF; outline:none;">
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+          <div>
+            <label style="display:block; font-size:12px; font-weight:500; color:#5A5548; margin-bottom:4px;">Phone (optional)</label>
+            <input id="inp-clientphone" type="text" class="inp" style="width:100%; padding:8px 10px; border:1px solid #E3D9C8; border-radius:6px; font-size:13.5px; color:#1C1C1C; background:#FFFFFF; outline:none;">
+          </div>
+          <div>
+            <label style="display:block; font-size:12px; font-weight:500; color:#5A5548; margin-bottom:4px;">Email (optional)</label>
+            <input id="inp-clientemail" type="text" class="inp" style="width:100%; padding:8px 10px; border:1px solid #E3D9C8; border-radius:6px; font-size:13.5px; color:#1C1C1C; background:#FFFFFF; outline:none;">
+          </div>
+        </div>
+      </div>
+
+      <!-- Add items -->
+      <div style="padding:16px 20px; border-bottom:1px solid #F0E9DC;">
+        <div style="font-size:11px; font-weight:600; letter-spacing:1.6px; text-transform:uppercase; color:#C46D08; margin-bottom:4px;">Add items</div>
+        <div style="font-size:12px; color:#5A5548; margin-bottom:12px;">Click an item to add it, then enter its rate.</div>
+
+        <div id="catalog"></div>
+
+        <div style="background:#FAF7F2; border:1px solid #F0E9DC; border-radius:8px; padding:12px; margin-top:4px;">
+          <div style="font-size:12px; font-weight:600; color:#5A5548; margin-bottom:8px;">Add custom item</div>
+          <input id="inp-customdesc" type="text" placeholder="Description" class="inp" style="width:100%; padding:8px 10px; border:1px solid #E3D9C8; border-radius:6px; font-size:13.5px; color:#1C1C1C; background:#FFFFFF; outline:none; margin-bottom:8px;">
+          <div style="display:grid; grid-template-columns:1fr 64px 84px auto; gap:6px; align-items:center;">
+            <select id="sel-customcat" style="padding:8px 6px; border:1px solid #E3D9C8; border-radius:6px; font-size:13px; color:#1C1C1C; background:#FFFFFF; outline:none;">
+              <option value="Drinks">Drinks</option>
+              <option value="Snacks">Snacks</option>
+              <option value="Services">Services</option>
+              <option value="Other">Other</option>
+            </select>
+            <input id="inp-customqty" type="number" min="0" placeholder="Qty" class="inp-sm" style="width:100%; padding:8px 8px; border:1px solid #E3D9C8; border-radius:6px; font-size:13px; color:#1C1C1C; background:#FFFFFF; outline:none;">
+            <input id="inp-customrate" type="number" min="0" step="0.01" placeholder="Rate" class="inp-sm" style="width:100%; padding:8px 8px; border:1px solid #E3D9C8; border-radius:6px; font-size:13px; color:#1C1C1C; background:#FFFFFF; outline:none;">
+            <button id="btn-addcustom" class="btn-add">Add</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Line items -->
+      <div style="padding:16px 20px; border-bottom:1px solid #F0E9DC;">
+        <div style="font-size:11px; font-weight:600; letter-spacing:1.6px; text-transform:uppercase; color:#C46D08; margin-bottom:10px;">Line items</div>
+        <div id="lineitems"></div>
+      </div>
+
+      <!-- Discounts -->
+      <div style="padding:16px 20px; border-bottom:1px solid #F0E9DC;">
+        <div style="font-size:11px; font-weight:600; letter-spacing:1.6px; text-transform:uppercase; color:#C46D08; margin-bottom:10px;">Discounts</div>
+        <div id="discounts-list"></div>
+        <div style="display:flex; gap:8px; margin-top:4px;">
+          <button id="btn-addfixed" class="btn-disc">+ Fixed amount</button>
+          <button id="btn-addpercent" class="btn-disc">+ Percentage</button>
+        </div>
+      </div>
+
+      <!-- Payment details -->
+      <div style="padding:16px 20px 22px;">
+        <div style="font-size:11px; font-weight:600; letter-spacing:1.6px; text-transform:uppercase; color:#C46D08; margin-bottom:10px;">Payment details</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;">
+          <div>
+            <label style="display:block; font-size:12px; font-weight:500; color:#5A5548; margin-bottom:4px;">Mobile Money</label>
+            <input id="inp-paymomo" type="text" class="inp-sm" style="width:100%; padding:8px 10px; border:1px solid #E3D9C8; border-radius:6px; font-size:13.5px; color:#1C1C1C; background:#FFFFFF; outline:none;">
+          </div>
+          <div>
+            <label style="display:block; font-size:12px; font-weight:500; color:#5A5548; margin-bottom:4px;">Bank</label>
+            <input id="inp-paybank" type="text" class="inp-sm" style="width:100%; padding:8px 10px; border:1px solid #E3D9C8; border-radius:6px; font-size:13.5px; color:#1C1C1C; background:#FFFFFF; outline:none;">
+          </div>
+          <div>
+            <label style="display:block; font-size:12px; font-weight:500; color:#5A5548; margin-bottom:4px;">Account No</label>
+            <input id="inp-payaccount" type="text" class="inp-sm" style="width:100%; padding:8px 10px; border:1px solid #E3D9C8; border-radius:6px; font-size:13.5px; color:#1C1C1C; background:#FFFFFF; outline:none;">
+          </div>
+          <div>
+            <label style="display:block; font-size:12px; font-weight:500; color:#5A5548; margin-bottom:4px;">Payable to</label>
+            <input id="inp-payname" type="text" class="inp-sm" style="width:100%; padding:8px 10px; border:1px solid #E3D9C8; border-radius:6px; font-size:13.5px; color:#1C1C1C; background:#FFFFFF; outline:none;">
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Sticky actions -->
+    <div id="action-bar" style="flex-shrink:0; background:#FFFFFF; border-top:1px solid #EAE2D4; padding:12px 20px; display:flex; gap:10px;">
+      <button id="btn-pdf" class="btn-pdf">Download PDF</button>
+      <button id="btn-print" class="btn-print">Print</button>
+    </div>
+  </div>
+
+  <!-- ══════════ INVOICE PREVIEW ══════════ -->
+  <div id="preview-wrap" style="flex:1; overflow:auto; padding:32px 24px; background:#F2EDE3;">
+    <div id="invoice-page" style="width:794px; margin:0 auto; background:#FFFFFF; padding:44px 48px; box-shadow:0 8px 40px rgba(60,45,20,0.14); font-size:14px; line-height:1.6; color:#1C1C1C;">
+
+      <!-- Header -->
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:24px; padding-bottom:26px; border-bottom:2px solid #D4B896; margin-bottom:32px;">
+        <div style="display:flex; align-items:center; gap:18px;">
+          <img src="logo.png" alt="Blak Ginja logo" onerror="brandLogoFallback(this)" style="width:88px; height:88px; object-fit:contain; flex-shrink:0;">
+          <div>
+            <div style="font-family:'Playfair Display', Georgia, serif; font-size:28px; font-weight:700; color:#1C1C1C; letter-spacing:-0.5px; line-height:1.1;">Blak <span style="color:#E8820C;">Ginja</span></div>
+            <div style="font-size:11.5px; font-weight:300; color:#5A5548; letter-spacing:1.5px; text-transform:uppercase; margin-top:3px;">Cocktails · Juices · Farm</div>
+            <div style="font-size:12.5px; color:#5A5548; margin-top:8px; line-height:1.55;">
+              Accra, Ghana<br>
+              <a href="tel:+233555181595" style="color:#C46D08; text-decoration:none;">+233 55 518 1595</a><br>
+              <a href="mailto:blakginja@gmail.com" style="color:#C46D08; text-decoration:none;">blakginja@gmail.com</a>
+            </div>
+          </div>
+        </div>
+        <div style="text-align:right; flex-shrink:0;">
+          <div style="font-family:'Playfair Display', Georgia, serif; font-size:38px; font-weight:700; color:#E8820C; letter-spacing:2px; line-height:1;">INVOICE</div>
+          <div style="font-size:13px; color:#5A5548; margin-top:10px; line-height:1.7;">
+            <span style="color:#1C1C1C; font-weight:600;">Date:</span> <span id="pv-date"></span><br>
+            <span style="color:#1C1C1C; font-weight:600;">Invoice #:</span> <span id="pv-invno"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bill to -->
+      <div style="margin-bottom:32px;">
+        <div style="background:#FDF3E3; border-left:4px solid #E8820C; border-radius:0 6px 6px 0; padding:18px 22px;">
+          <div style="font-size:10px; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:#C46D08; margin-bottom:8px;">Bill To</div>
+          <div id="pv-billname" style="font-family:'Playfair Display', Georgia, serif; font-size:20px; font-weight:600; color:#1C1C1C;"></div>
+          <div id="pv-contact-wrap" style="display:none;">
+            <div id="pv-contact" style="font-size:12.5px; color:#5A5548; margin-top:5px;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Line items table -->
+      <div style="border-radius:8px; overflow:hidden; box-shadow:0 2px 16px rgba(0,0,0,0.08); margin-bottom:30px;">
+        <div style="display:flex; background:#1C1C1C; color:#FFFFFF;">
+          <div style="flex:1; min-width:0; padding:13px 16px; font-size:11px; font-weight:600; letter-spacing:1.2px; text-transform:uppercase;">Description</div>
+          <div style="width:70px; padding:13px 8px; font-size:11px; font-weight:600; letter-spacing:1.2px; text-transform:uppercase; text-align:center;">Qty</div>
+          <div style="width:110px; padding:13px 8px; font-size:11px; font-weight:600; letter-spacing:1.2px; text-transform:uppercase; text-align:center;">Rate</div>
+          <div style="width:130px; padding:13px 16px; font-size:11px; font-weight:600; letter-spacing:1.2px; text-transform:uppercase; text-align:right;">Amount</div>
+        </div>
+        <div id="pv-tbody"></div>
+      </div>
+
+      <!-- Totals -->
+      <div style="display:flex; justify-content:flex-end; margin-bottom:38px;">
+        <div style="width:290px; border-top:2px solid #D4B896; padding-top:14px;">
+          <div id="pv-totals"></div>
+        </div>
+      </div>
+
+      <!-- Payment box -->
+      <div style="background:#1C1C1C; color:#FFFFFF; border-radius:8px; padding:24px 28px; display:grid; grid-template-columns:1fr 1fr; gap:20px; font-size:13px;">
+        <div>
+          <div style="font-size:10px; letter-spacing:2px; text-transform:uppercase; color:#E8820C; font-weight:600; margin-bottom:8px;">Payment Instructions</div>
+          <div style="line-height:1.7; color:#D0C8BC;">Please pay via <span style="color:#FFFFFF; font-weight:600;">Mobile Money</span> or <span style="color:#FFFFFF; font-weight:600;">Bank Transfer</span> to <span id="pv-payname"></span>.</div>
+        </div>
+        <div>
+          <div style="font-size:10px; letter-spacing:2px; text-transform:uppercase; color:#E8820C; font-weight:600; margin-bottom:8px;">Payment Details</div>
+          <div style="line-height:1.7; color:#D0C8BC;">
+            <span style="color:#FFFFFF; font-weight:600;">Mobile Money:</span> <span id="pv-momo"></span><br>
+            <span style="color:#FFFFFF; font-weight:600;">Bank:</span> <span id="pv-bank"></span><br>
+            <span style="color:#FFFFFF; font-weight:600;">Account No:</span> <span id="pv-account"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Thank you -->
+      <div style="text-align:center; margin-top:26px; font-family:'Playfair Display', Georgia, serif; font-size:16px; color:#5A5548; letter-spacing:0.5px;"><span style="color:#E8820C; font-size:13px;">✦</span>&nbsp;&nbsp;Thank you for your business&nbsp;&nbsp;<span style="color:#E8820C; font-size:13px;">✦</span></div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var STORAGE_KEY = 'blakginja_last_invoice_no';
+  var CATEGORY_ORDER = ['Drinks', 'Snacks', 'Services', 'Other'];
+  var CATALOG = [
+    { name: 'Drinks', items: ['Sobolo', 'Lamugin', 'Aliha', 'Ginger', 'Pineapple & Ginger', 'Pineapple Juice', 'Pineapple & Mint', 'Tropical (mango, orange, and pineapple)', 'Beetroot', 'Watermelon & Beetroot', 'Mint Drink'] },
+    { name: 'Snacks', items: ['Poolo', 'Dzowee', 'Agbelikaklo', 'Kulikuli', 'Nkatie cake'] },
+    { name: 'Services', items: ['Transport', 'Service charge'] }
+  ];
+
+  // localStorage may be unavailable (private mode, file://, blocked). Fall back to a
+  // session-only counter so nothing ever throws.
+  var sessionCounter = 0;
+  function readLastNo() {
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      var n = parseInt(raw || '0', 10) || 0;
+      return n < 0 ? 0 : n;
+    } catch (e) {
+      return sessionCounter;
+    }
+  }
+  function writeLastNo(n) {
+    sessionCounter = n;
+    try { localStorage.setItem(STORAGE_KEY, String(n)); } catch (e) {}
+  }
+
+  var uidSeq = 1;
+  function uid() { return 'i' + (uidSeq++); }
+
+  function todayISO() {
+    var d = new Date();
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  }
+
+  var state = {
+    invNo: String(readLastNo() + 1).padStart(3, '0'),
+    date: todayISO(),
+    clientName: '', clientPhone: '', clientEmail: '',
+    items: [], discounts: [],
+    customCat: 'Drinks',
+    payMomo: '+233 55 518 1595', payBank: 'CAL Bank', payAccount: '1400009574281', payName: 'Mary Bluawofogbe',
+    pdfBusy: false
+  };
+
+  // ---------- helpers ----------
+  function el(id) { return document.getElementById(id); }
+  function setText(id, v) { var n = el(id); if (n) n.textContent = v; }
+
+  function esc(s) {
+    return String(s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+  function escAttr(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+  }
+
+  function money(n) {
+    if (!isFinite(n)) n = 0;
+    return '₵' + n.toLocaleString('en-GH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function formatDate(iso) {
+    var p = (iso || '').split('-');
+    if (p.length !== 3) return iso || '';
+    var dt = new Date(+p[0], +p[1] - 1, +p[2]);
+    if (isNaN(dt.getTime())) return iso;
+    return dt.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  }
+
+  function calc() {
+    var items = state.items.map(function (it) {
+      return {
+        id: it.id, desc: it.desc, cat: it.cat, qty: it.qty, rate: it.rate,
+        amount: (parseFloat(it.qty) || 0) * (parseFloat(it.rate) || 0)
+      };
+    });
+    var subtotal = items.reduce(function (s, it) { return s + it.amount; }, 0);
+    var discounts = state.discounts.map(function (dc) {
+      var v = parseFloat(dc.value) || 0;
+      var amount = dc.type === 'percent' ? subtotal * v / 100 : v;
+      return { id: dc.id, label: dc.label, type: dc.type, value: dc.value, amount: amount };
+    });
+    var total = subtotal - discounts.reduce(function (s, dc) { return s + dc.amount; }, 0);
+    return { items: items, subtotal: subtotal, discounts: discounts, total: total };
+  }
+
+  // ---------- data ops ----------
+  function addItem(desc, cat, qty, rate) {
+    state.items.push({ id: uid(), desc: desc, cat: cat, qty: qty, rate: rate });
+    renderLineItems();
+    renderPreview();
+  }
+  function removeItem(id) {
+    state.items = state.items.filter(function (it) { return it.id !== id; });
+    renderLineItems();
+    renderPreview();
+  }
+  function addDiscount(type) {
+    state.discounts.push({
+      id: uid(),
+      label: type === 'percent' ? 'Percentage discount' : 'Discount',
+      type: type, value: ''
+    });
+    renderDiscounts();
+    renderPreview();
+  }
+  function removeDiscount(id) {
+    state.discounts = state.discounts.filter(function (dc) { return dc.id !== id; });
+    renderDiscounts();
+    renderPreview();
+  }
+
+  // ---------- catalog (rendered once) ----------
+  function renderCatalog() {
+    var html = '';
+    CATALOG.forEach(function (g) {
+      html += '<div style="margin-bottom:12px;">' +
+        '<div style="font-size:10.5px; font-weight:600; letter-spacing:1.4px; text-transform:uppercase; color:#3A6B1A; margin-bottom:6px;">' + esc(g.name) + '</div>' +
+        '<div style="display:flex; flex-wrap:wrap; gap:6px;">';
+      g.items.forEach(function (label) {
+        html += '<button type="button" class="chip" data-name="' + escAttr(label) + '" data-cat="' + escAttr(g.name) + '">' + esc(label) + '</button>';
+      });
+      html += '</div></div>';
+    });
+    el('catalog').innerHTML = html;
+  }
+
+  // ---------- line items editor ----------
+  function renderLineItems() {
+    var c = calc();
+    var container = el('lineitems');
+    if (c.items.length === 0) {
+      container.innerHTML = '<div style="font-size:12.5px; color:#5A5548; background:#FAF7F2; border:1px dashed #E3D9C8; border-radius:6px; padding:14px; text-align:center;">No items yet. Click an item above to add it.</div>';
+      return;
+    }
+    var html = '<div style="display:grid; grid-template-columns:1fr 50px 76px 74px 24px; gap:6px; font-size:10.5px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:#5A5548; margin-bottom:6px; padding:0 2px;">' +
+      '<div>Description</div><div style="text-align:center;">Qty</div><div style="text-align:right;">Rate</div><div style="text-align:right;">Amount</div><div></div></div>';
+
+    CATEGORY_ORDER.forEach(function (name) {
+      var rows = c.items.filter(function (it) { return it.cat === name; });
+      if (!rows.length) return;
+      html += '<div style="font-size:10.5px; font-weight:600; letter-spacing:1.4px; text-transform:uppercase; color:#3A6B1A; margin:10px 0 6px;">' + esc(name) + '</div>';
+      rows.forEach(function (it) {
+        html += '<div style="display:grid; grid-template-columns:1fr 50px 76px 74px 24px; gap:6px; align-items:center; margin-bottom:6px;">' +
+          '<input type="text" class="inp-sm" data-id="' + it.id + '" data-field="desc" value="' + escAttr(it.desc) + '" style="width:100%; padding:7px 9px; border:1px solid #E3D9C8; border-radius:6px; font-size:13px; color:#1C1C1C; background:#FFFFFF; outline:none; min-width:0;">' +
+          '<input type="number" min="0" class="inp-sm" data-id="' + it.id + '" data-field="qty" value="' + escAttr(it.qty) + '" style="width:100%; padding:7px 6px; border:1px solid #E3D9C8; border-radius:6px; font-size:13px; color:#1C1C1C; background:#FFFFFF; outline:none; text-align:center; min-width:0;">' +
+          '<input type="number" min="0" step="0.01" placeholder="0.00" class="inp-sm" data-id="' + it.id + '" data-field="rate" value="' + escAttr(it.rate) + '" style="width:100%; padding:7px 8px; border:1px solid #E3D9C8; border-radius:6px; font-size:13px; color:#1C1C1C; background:#FFFFFF; outline:none; text-align:right; min-width:0;">' +
+          '<div data-amount-id="' + it.id + '" style="font-size:12.5px; font-weight:600; text-align:right; color:#1C1C1C; white-space:nowrap; overflow:hidden;">' + money(it.amount) + '</div>' +
+          '<button type="button" class="btn-x" data-action="remove-item" data-id="' + it.id + '" title="Remove item">×</button>' +
+          '</div>';
+      });
+    });
+    container.innerHTML = html;
+  }
+
+  function updateRowAmount(id) {
+    var it = state.items.find(function (x) { return x.id === id; });
+    if (!it) return;
+    var cell = el('lineitems').querySelector('[data-amount-id="' + id + '"]');
+    if (cell) cell.textContent = money((parseFloat(it.qty) || 0) * (parseFloat(it.rate) || 0));
+  }
+
+  // ---------- discounts editor ----------
+  function renderDiscounts() {
+    var container = el('discounts-list');
+    if (state.discounts.length === 0) { container.innerHTML = ''; return; }
+    var html = '<div style="display:grid; grid-template-columns:1fr 100px 70px 24px; gap:6px; font-size:10.5px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:#5A5548; margin-bottom:6px; padding:0 2px;">' +
+      '<div>Label</div><div>Type</div><div style="text-align:right;">Value</div><div></div></div>';
+    state.discounts.forEach(function (dc) {
+      html += '<div style="display:grid; grid-template-columns:1fr 100px 70px 24px; gap:6px; align-items:center; margin-bottom:6px;">' +
+        '<input type="text" class="inp-sm" data-id="' + dc.id + '" data-field="label" value="' + escAttr(dc.label) + '" style="width:100%; padding:7px 9px; border:1px solid #E3D9C8; border-radius:6px; font-size:13px; color:#1C1C1C; background:#FFFFFF; outline:none; min-width:0;">' +
+        '<select data-id="' + dc.id + '" data-field="type" style="width:100%; padding:7px 4px; border:1px solid #E3D9C8; border-radius:6px; font-size:12.5px; color:#1C1C1C; background:#FFFFFF; outline:none;">' +
+          '<option value="fixed"' + (dc.type === 'fixed' ? ' selected' : '') + '>Fixed ₵</option>' +
+          '<option value="percent"' + (dc.type === 'percent' ? ' selected' : '') + '>Percent %</option>' +
+        '</select>' +
+        '<input type="number" min="0" step="0.01" placeholder="0" class="inp-sm" data-id="' + dc.id + '" data-field="value" value="' + escAttr(dc.value) + '" style="width:100%; padding:7px 8px; border:1px solid #E3D9C8; border-radius:6px; font-size:13px; color:#1C1C1C; background:#FFFFFF; outline:none; text-align:right; min-width:0;">' +
+        '<button type="button" class="btn-x" data-action="remove-discount" data-id="' + dc.id + '" title="Remove discount">×</button>' +
+        '</div>';
+    });
+    container.innerHTML = html;
+  }
+
+  // ---------- preview ----------
+  function groupHeaderRow(name, dotColor) {
+    return '<div style="background:#EEF5E8; color:#3A6B1A; font-size:11px; font-weight:600; letter-spacing:1.8px; text-transform:uppercase; padding:9px 16px; border-bottom:1px solid #C8DDB8;"><span style="color:' + dotColor + '; margin-right:8px;">●</span>' + esc(name) + '</div>';
+  }
+
+  function renderPreview() {
+    var c = calc();
+
+    setText('pv-date', formatDate(state.date));
+    setText('pv-invno', state.invNo);
+    setText('pv-billname', state.clientName.trim() || '--');
+
+    var parts = [];
+    if (state.clientPhone.trim()) parts.push(state.clientPhone.trim());
+    if (state.clientEmail.trim()) parts.push(state.clientEmail.trim());
+    var wrap = el('pv-contact-wrap');
+    if (parts.length) {
+      wrap.style.display = 'block';
+      setText('pv-contact', parts.join(' · '));
+    } else {
+      wrap.style.display = 'none';
+    }
+
+    // table body
+    var body = '';
+    if (c.items.length === 0) {
+      body += '<div style="padding:24px 16px; text-align:center; color:#5A5548; font-size:13px; background:#FFFFFF;">No items yet. Add items in the editor to see them here.</div>';
+    } else {
+      CATEGORY_ORDER.forEach(function (name) {
+        var rows = c.items.filter(function (it) { return it.cat === name; });
+        if (!rows.length) return;
+        body += groupHeaderRow(name, '#E8820C');
+        rows.forEach(function (it, i) {
+          var bg = i % 2 === 1 ? '#FDFAF5' : '#FFFFFF';
+          body += '<div style="display:flex; border-bottom:1px solid #EDE8E0; background:' + bg + ';">' +
+            '<div style="flex:1; min-width:0; padding:12px 16px; color:#1C1C1C;">' + esc(it.desc || ' ') + '</div>' +
+            '<div style="width:70px; padding:12px 8px; text-align:center; color:#5A5548;">' + esc(it.qty === '' ? '0' : it.qty) + '</div>' +
+            '<div style="width:110px; padding:12px 8px; text-align:center; color:#5A5548;">' + money(parseFloat(it.rate) || 0) + '</div>' +
+            '<div style="width:130px; padding:12px 16px; text-align:right; font-weight:600; color:#1C1C1C;">' + money(it.amount) + '</div>' +
+            '</div>';
+        });
+      });
+    }
+    if (c.discounts.length) {
+      body += groupHeaderRow('Discounts', '#3A6B1A');
+      c.discounts.forEach(function (dc) {
+        var typeLabel = dc.type === 'percent' ? ((parseFloat(dc.value) || 0) + '%') : 'Fixed';
+        body += '<div style="display:flex; border-bottom:1px solid #EDE8E0; background:#FFFFFF;">' +
+          '<div style="flex:1; min-width:0; padding:12px 16px; color:#3A6B1A;"><span style="font-size:10px; margin-right:6px;">▼</span>' + esc(dc.label || 'Discount') + '</div>' +
+          '<div style="width:70px; padding:12px 8px; text-align:center; color:#5A5548;">-</div>' +
+          '<div style="width:110px; padding:12px 8px; text-align:center; color:#5A5548;">' + esc(typeLabel) + '</div>' +
+          '<div style="width:130px; padding:12px 16px; text-align:right; font-weight:600; color:#3A6B1A;">−' + money(dc.amount) + '</div>' +
+          '</div>';
+      });
+    }
+    el('pv-tbody').innerHTML = body;
+
+    // totals
+    var totals = '<div style="display:flex; justify-content:space-between; padding:5px 0; font-size:14px; color:#5A5548;"><span>Subtotal</span><span>' + money(c.subtotal) + '</span></div>';
+    c.discounts.forEach(function (dc) {
+      totals += '<div style="display:flex; justify-content:space-between; padding:5px 0; font-size:14px; color:#3A6B1A; font-weight:500;"><span>' + esc(dc.label || 'Discount') + '</span><span>−' + money(dc.amount) + '</span></div>';
+    });
+    totals += '<div style="display:flex; justify-content:space-between; margin-top:12px; padding-top:14px; border-top:2px solid #E8820C; font-family:\'Playfair Display\', Georgia, serif; font-size:20px; font-weight:700; color:#1C1C1C;"><span>Total</span><span style="color:#C46D08;">' + money(c.total) + '</span></div>';
+    el('pv-totals').innerHTML = totals;
+
+    // payment
+    setText('pv-payname', state.payName);
+    setText('pv-momo', state.payMomo);
+    setText('pv-bank', state.payBank);
+    setText('pv-account', state.payAccount);
+  }
+
+  // ---------- PDF / print ----------
+  function downloadPdf() {
+    if (state.pdfBusy) return;
+    if (typeof html2pdf === 'undefined') {
+      alert('The PDF tool is still loading. Please try again in a moment.');
+      return;
+    }
+    var elp = el('invoice-page');
+    if (!elp) return;
+    var num = (state.invNo || '').trim() || '001';
+    setPdfBusy(true);
+    var opts = {
+      margin: [8, 0, 8, 0],
+      filename: 'BlakGinja-Invoice-' + num + '.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2, useCORS: true, backgroundColor: '#FFFFFF' },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+      pagebreak: { mode: ['css', 'legacy'] }
+    };
+    html2pdf().set(opts).from(elp).save().then(function () {
+      var n = parseInt(num, 10);
+      if (!isNaN(n) && n > 0) writeLastNo(n);
+      setPdfBusy(false);
+    }).catch(function () {
+      setPdfBusy(false);
+      alert('Could not create the PDF. Please use the Print button instead.');
+    });
+  }
+
+  function setPdfBusy(busy) {
+    state.pdfBusy = busy;
+    var btn = el('btn-pdf');
+    btn.disabled = busy;
+    btn.textContent = busy ? 'Preparing PDF...' : 'Download PDF';
+  }
+
+  // ---------- wiring ----------
+  function bindStaticInput(id, key, afterPreview) {
+    var input = el(id);
+    input.addEventListener('input', function (e) {
+      state[key] = e.target.value;
+      renderPreview();
+      if (afterPreview) afterPreview();
+    });
+  }
+
+  function bindEvents() {
+    // fixed fields
+    bindStaticInput('inp-invno', 'invNo');
+    bindStaticInput('inp-date', 'date');
+    bindStaticInput('inp-clientname', 'clientName');
+    bindStaticInput('inp-clientphone', 'clientPhone');
+    bindStaticInput('inp-clientemail', 'clientEmail');
+    bindStaticInput('inp-paymomo', 'payMomo');
+    bindStaticInput('inp-paybank', 'payBank');
+    bindStaticInput('inp-payaccount', 'payAccount');
+    bindStaticInput('inp-payname', 'payName');
+
+    el('sel-customcat').addEventListener('change', function (e) { state.customCat = e.target.value; });
+
+    // custom item add
+    el('btn-addcustom').addEventListener('click', function () {
+      var desc = el('inp-customdesc').value.trim();
+      if (!desc) return;
+      var qty = el('inp-customqty').value || '1';
+      var rate = el('inp-customrate').value;
+      addItem(desc, state.customCat, qty, rate);
+      el('inp-customdesc').value = '';
+      el('inp-customqty').value = '';
+      el('inp-customrate').value = '';
+    });
+
+    // catalog chips (delegated)
+    el('catalog').addEventListener('click', function (e) {
+      var btn = e.target.closest('button.chip');
+      if (!btn) return;
+      addItem(btn.getAttribute('data-name'), btn.getAttribute('data-cat'), '1', '');
+      btn.classList.remove('flash');
+      // reflow so the animation restarts if clicked repeatedly
+      void btn.offsetWidth;
+      btn.classList.add('flash');
+      setTimeout(function () { btn.classList.remove('flash'); }, 700);
+    });
+
+    // line items (delegated) - edit in place, no re-render on field edits
+    var li = el('lineitems');
+    li.addEventListener('input', function (e) {
+      var t = e.target;
+      var id = t.getAttribute('data-id'), field = t.getAttribute('data-field');
+      if (!id || !field) return;
+      var it = state.items.find(function (x) { return x.id === id; });
+      if (!it) return;
+      it[field] = t.value;
+      if (field === 'qty' || field === 'rate') updateRowAmount(id);
+      renderPreview();
+    });
+    li.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-action="remove-item"]');
+      if (btn) removeItem(btn.getAttribute('data-id'));
+    });
+
+    // discounts (delegated)
+    var dl = el('discounts-list');
+    function discountEdit(e) {
+      var t = e.target;
+      var id = t.getAttribute('data-id'), field = t.getAttribute('data-field');
+      if (!id || !field) return;
+      var dc = state.discounts.find(function (x) { return x.id === id; });
+      if (!dc) return;
+      dc[field] = t.value;
+      renderPreview();
+    }
+    dl.addEventListener('input', discountEdit);
+    dl.addEventListener('change', discountEdit);
+    dl.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-action="remove-discount"]');
+      if (btn) removeDiscount(btn.getAttribute('data-id'));
+    });
+
+    el('btn-addfixed').addEventListener('click', function () { addDiscount('fixed'); });
+    el('btn-addpercent').addEventListener('click', function () { addDiscount('percent'); });
+
+    el('btn-pdf').addEventListener('click', downloadPdf);
+    el('btn-print').addEventListener('click', function () { window.print(); });
+  }
+
+  function setInitialFieldValues() {
+    el('inp-invno').value = state.invNo;
+    el('inp-date').value = state.date;
+    el('inp-clientname').value = state.clientName;
+    el('inp-clientphone').value = state.clientPhone;
+    el('inp-clientemail').value = state.clientEmail;
+    el('sel-customcat').value = state.customCat;
+    el('inp-paymomo').value = state.payMomo;
+    el('inp-paybank').value = state.payBank;
+    el('inp-payaccount').value = state.payAccount;
+    el('inp-payname').value = state.payName;
+  }
+
+  function init() {
+    setInitialFieldValues();
+    renderCatalog();
+    renderLineItems();
+    renderDiscounts();
+    renderPreview();
+    bindEvents();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
+// Logo fallback: if logo.png is missing, draw a simple brand badge so the site and
+// the PDF still render. Replace logo.png with the real logo to override this.
+function brandLogoFallback(img) {
+  img.onerror = null;
+  img.src = "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ccircle%20cx='50'%20cy='50'%20r='49'%20fill='%231C1C1C'/%3E%3Ccircle%20cx='50'%20cy='50'%20r='46'%20fill='none'%20stroke='%23E8820C'%20stroke-width='2.5'/%3E%3Ctext%20x='50'%20y='62'%20font-family='Georgia,serif'%20font-size='34'%20font-weight='700'%20fill='%23E8820C'%20text-anchor='middle'%3EBG%3C/text%3E%3C/svg%3E";
+}
+</script>
+</body>
+</html>
