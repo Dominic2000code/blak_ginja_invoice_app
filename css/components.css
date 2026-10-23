@@ -1,6 +1,15 @@
-/* Focus states (ported from prototype style-focus) */
-.inp:focus { border-color: #E8820C; box-shadow: 0 0 0 3px rgba(232,130,12,0.14); }
-.inp-sm:focus { border-color: #E8820C; }
+/* Focus states. Every editor field and select gets the same visible focus.
+   !important is needed because the fields carry inline border/outline styles. */
+#editor-panel input:focus,
+#editor-panel select:focus {
+  border-color: #C46D08 !important;
+  box-shadow: 0 0 0 3px rgba(232,130,12,0.22) !important;
+}
+#editor-panel button:focus-visible,
+#invoice-page a:focus-visible {
+  outline: 2px solid #C46D08;
+  outline-offset: 2px;
+}
 
 /* Catalog chips (ported from prototype style-hover / style-active / flash) */
 .chip {

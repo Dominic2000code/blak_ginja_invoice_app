@@ -32,7 +32,9 @@ export function downloadPdf() {
       margin: [8, 0, 8, 0],
       filename: 'BlakGinja-Invoice-' + num + '.pdf',
       image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2, useCORS: true, backgroundColor: '#FFFFFF' },
+      // scrollX/scrollY 0: without these, html2canvas offsets the capture by the
+      // page scroll, and on phones (invoice below the editor) the PDF comes out blank.
+      html2canvas: { scale: 2, useCORS: true, backgroundColor: '#FFFFFF', scrollX: 0, scrollY: 0 },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
       pagebreak: { mode: ['css', 'legacy'] }
     };
@@ -42,7 +44,9 @@ export function downloadPdf() {
     });
   }).catch(() => {
     setPdfBusy(false);
-    alert('Could not create the PDF. Please use the Print button instead.');
+    alert(navigator.onLine === false
+      ? "You're offline and the PDF tool hasn't been downloaded yet. Use Print instead, or connect to the internet once and try Download PDF again."
+      : 'Could not create the PDF. Please use the Print button instead.');
   });
 }
 

@@ -6,3 +6,8 @@ a:hover { color: #E8820C; }
 input, select, button { font-family: 'DM Sans', Arial, sans-serif; }
 @keyframes chipPop { 0% { transform: scale(1); } 40% { transform: scale(1.12); } 100% { transform: scale(1); } }
 input[type="date"] { min-width: 0; }
+/* Headings are styled inline; drop the browser's default heading margins. */
+h1, h2 { margin: 0; }
+/* Long unbroken text (descriptions, emails, big amounts) wraps instead of
+   spilling into the next invoice column or being clipped by the table. */
+#invoice-page { overflow-wrap: anywhere; }
