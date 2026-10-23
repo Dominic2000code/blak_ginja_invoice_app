@@ -5,7 +5,7 @@
   When you change any app file, bump CACHE_VERSION (v1 -> v2 -> ...).
   Old caches are cleared on activation, so visitors get the fresh version.
 */
-var CACHE_VERSION = 'blakginja-v7';
+var CACHE_VERSION = 'blakginja-v9';
 
 // Same-origin files that make up the app shell. These are pre-cached on install.
 // CDN files (the PDF library and Google Fonts) are cross-origin and get cached on

@@ -26,9 +26,12 @@
   transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 .chip.flash { background: #EEF5E8; border-color: #3A6B1A; color: #3A6B1A; animation: chipPop 0.35s ease; }
-.chip:hover {
-  border-color: #D97706; color: #A65800; background: #FDF3E3;
-  transform: translateY(-1px); box-shadow: 0 2px 8px rgba(232,130,12,0.25);
+/* Hover styles only where a real pointer hovers; on touch they would stick after a tap. */
+@media (hover: hover) {
+  .chip:hover {
+    border-color: #D97706; color: #A65800; background: #FDF3E3;
+    transform: translateY(-1px); box-shadow: 0 2px 8px rgba(232,130,12,0.25);
+  }
 }
 .chip:active { transform: scale(0.92); }
 
@@ -50,7 +53,7 @@
 .mode-tab.active { background: #A65800; color: #FFFFFF; box-shadow: 0 2px 6px rgba(232,130,12,0.35); }
 
 /* Bar package include toggles */
-.chip.toggle:hover { color: #1C1C1C; background: #FFFFFF; }
+@media (hover: hover) { .chip.toggle:hover { color: #1C1C1C; background: #FFFFFF; } }
 .chip.toggle.on, .chip.toggle.on:hover { background: #EEF5E8; color: #3A6B1A; font-weight: 600; }
 .chip.toggle.on { border-color: #3A6B1A; }
-.chip.toggle.on:hover { border-color: #D97706; }
+@media (hover: hover) { .chip.toggle.on:hover { border-color: #D97706; } }

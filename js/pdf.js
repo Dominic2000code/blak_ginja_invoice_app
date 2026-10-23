@@ -34,7 +34,10 @@ export function downloadPdf() {
       image: { type: 'jpeg', quality: 0.98 },
       // scrollX/scrollY 0: without these, html2canvas offsets the capture by the
       // page scroll, and on phones (invoice below the editor) the PDF comes out blank.
-      html2canvas: { scale: 2, useCORS: true, backgroundColor: '#FFFFFF', scrollX: 0, scrollY: 0 },
+      // windowWidth 794 + x 0: html2pdf centres its A4 container in the window, so on
+      // wide screens the capture picked up a grey band from its overlay. Rendering in
+      // an A4-wide window with the crop at x 0 gives the same clean page on any screen.
+      html2canvas: { scale: 2, useCORS: true, backgroundColor: '#FFFFFF', scrollX: 0, scrollY: 0, windowWidth: 794, x: 0 },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
       pagebreak: { mode: ['css', 'legacy'] }
     };

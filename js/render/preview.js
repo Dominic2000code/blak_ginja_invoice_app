@@ -7,10 +7,17 @@ function groupHeaderRow(name, dotColor) {
   return '<div style="background:#EEF5E8; color:#3A6B1A; font-size:11px; font-weight:600; letter-spacing:1.8px; text-transform:uppercase; padding:9px 16px; border-bottom:1px solid #C8DDB8;"><span style="color:' + dotColor + '; margin-right:8px;">●</span>' + esc(name) + '</div>';
 }
 
-function theadCell(label, width, align) {
+// Class hooks (pv-mid, pv-amt, pv-line) let the compact phone layout in
+// css/responsive.css restack rows; they have no effect on the A4/PDF layout.
+function theadCell(label, width, align, cls) {
   const pad = width ? (align === 'right' ? '13px 16px' : '13px 8px') : '13px 16px';
   const size = width ? 'width:' + width + 'px;' : 'flex:1; min-width:0;';
-  return '<div style="' + size + ' padding:' + pad + '; font-size:11px; font-weight:600; letter-spacing:1.2px; text-transform:uppercase;' + (align ? ' text-align:' + align + ';' : '') + '">' + label + '</div>';
+  return '<div' + (cls ? ' class="' + cls + '"' : '') + ' style="' + size + ' padding:' + pad + '; font-size:11px; font-weight:600; letter-spacing:1.2px; text-transform:uppercase;' + (align ? ' text-align:' + align + ';' : '') + '">' + label + '</div>';
+}
+
+// Compact-layout summary line under a row (hidden at A4 width).
+function rowLine(text) {
+  return '<div class="pv-line">' + esc(text) + '</div>';
 }
 
 export function renderPreview() {
@@ -27,8 +34,8 @@ export function renderPreview() {
   locEl.textContent = loc;
 
   el('pv-thead').innerHTML = isBar
-    ? theadCell('Description') + theadCell('Guests', 90, 'center') + theadCell('Rate per head', 120, 'center') + theadCell('Amount', 130, 'right')
-    : theadCell('Description') + theadCell('Qty', 60, 'center') + theadCell('Size', 80, 'center') + theadCell('Rate', 100, 'center') + theadCell('Amount', 130, 'right');
+    ? theadCell('Description') + theadCell('Guests', 90, 'center', 'pv-mid') + theadCell('Rate per head', 120, 'center', 'pv-mid') + theadCell('Amount', 130, 'right', 'pv-amt')
+    : theadCell('Description') + theadCell('Qty', 60, 'center', 'pv-mid') + theadCell('Size', 80, 'center', 'pv-mid') + theadCell('Rate', 100, 'center', 'pv-mid') + theadCell('Amount', 130, 'right', 'pv-amt');
 
   const parts = [];
   if (state.clientPhone.trim()) parts.push(state.clientPhone.trim());
@@ -54,13 +61,15 @@ export function renderPreview() {
         if (!picked.length) return;
         lines += '<div style="font-size:12.5px; color:#5A5548; line-height:1.65;"><span style="color:#3A6B1A; font-weight:600;">' + esc(g.name) + ':</span> ' + esc(picked.join(', ')) + '.</div>';
       });
-      body += '<div style="display:flex; align-items:center; border-bottom:1px solid #EDE8E0; background:' + bg + ';">' +
-        '<div style="flex:1; min-width:0; padding:16px;">' +
+      const guests = p.qty === '' ? '0' : p.qty;
+      body += '<div class="pv-row pv-row-bar" style="display:flex; align-items:center; border-bottom:1px solid #EDE8E0; background:' + bg + ';">' +
+        '<div class="pv-desc" style="flex:1; min-width:0; padding:16px;">' +
           '<div style="font-size:15px; font-weight:600; color:#1C1C1C; margin-bottom:4px;">' + esc((p.name || '').trim() || 'Bar package') + '</div>' + lines +
         '</div>' +
-        '<div style="width:90px; padding:12px 8px; text-align:center; color:#5A5548;">' + esc(p.qty === '' ? '0' : p.qty) + '</div>' +
-        '<div style="width:120px; padding:12px 8px; text-align:center; color:#5A5548;">' + money(parseFloat(p.rate) || 0) + '</div>' +
-        '<div style="width:130px; padding:12px 16px; text-align:right; font-weight:600; color:#1C1C1C;">' + money(row.amount) + '</div>' +
+        '<div class="pv-mid" style="width:90px; padding:12px 8px; text-align:center; color:#5A5548;">' + esc(guests) + '</div>' +
+        '<div class="pv-mid" style="width:120px; padding:12px 8px; text-align:center; color:#5A5548;">' + money(parseFloat(p.rate) || 0) + '</div>' +
+        '<div class="pv-amt" style="width:130px; padding:12px 16px; text-align:right; font-weight:600; color:#1C1C1C;">' + money(row.amount) + '</div>' +
+        rowLine(guests + ' guests × ' + money(parseFloat(p.rate) || 0) + ' per head') +
         '</div>';
     });
   } else if (c.items.length === 0) {
@@ -72,12 +81,16 @@ export function renderPreview() {
       body += groupHeaderRow(name, '#D97706');
       rows.forEach((it, i) => {
         const bg = i % 2 === 1 ? '#FDFAF5' : '#FFFFFF';
-        body += '<div style="display:flex; border-bottom:1px solid #EDE8E0; background:' + bg + ';">' +
-          '<div style="flex:1; min-width:0; padding:12px 16px; color:#1C1C1C;">' + esc(it.desc || ' ') + '</div>' +
-          '<div style="width:60px; padding:12px 8px; text-align:center; color:#5A5548;">' + esc(it.qty === '' ? '0' : it.qty) + '</div>' +
-          '<div style="width:80px; padding:12px 8px; text-align:center; color:#5A5548;">' + esc(it.cat === 'Drinks' ? ((it.size || '').trim() || '-') : '-') + '</div>' +
-          '<div style="width:100px; padding:12px 8px; text-align:center; color:#5A5548;">' + money(parseFloat(it.rate) || 0) + '</div>' +
-          '<div style="width:130px; padding:12px 16px; text-align:right; font-weight:600; color:#1C1C1C;">' + money(it.amount) + '</div>' +
+        const qty = it.qty === '' ? '0' : it.qty;
+        const size = it.cat === 'Drinks' ? ((it.size || '').trim() || '-') : '-';
+        const rate = money(parseFloat(it.rate) || 0);
+        body += '<div class="pv-row" style="display:flex; border-bottom:1px solid #EDE8E0; background:' + bg + ';">' +
+          '<div class="pv-desc" style="flex:1; min-width:0; padding:12px 16px; color:#1C1C1C;">' + esc(it.desc || ' ') + '</div>' +
+          '<div class="pv-mid" style="width:60px; padding:12px 8px; text-align:center; color:#5A5548;">' + esc(qty) + '</div>' +
+          '<div class="pv-mid" style="width:80px; padding:12px 8px; text-align:center; color:#5A5548;">' + esc(size) + '</div>' +
+          '<div class="pv-mid" style="width:100px; padding:12px 8px; text-align:center; color:#5A5548;">' + rate + '</div>' +
+          '<div class="pv-amt" style="width:130px; padding:12px 16px; text-align:right; font-weight:600; color:#1C1C1C;">' + money(it.amount) + '</div>' +
+          rowLine(qty + ' × ' + rate + (size !== '-' ? ' · ' + size : '')) +
           '</div>';
       });
     });
@@ -86,10 +99,11 @@ export function renderPreview() {
     body += groupHeaderRow('Discounts', '#3A6B1A');
     c.discounts.forEach((dc) => {
       const typeLabel = dc.type === 'percent' ? (dc.rate + '%') : 'Fixed';
-      body += '<div style="display:flex; border-bottom:1px solid #EDE8E0; background:#FFFFFF;">' +
-        '<div style="flex:1; min-width:0; padding:12px 16px; color:#3A6B1A;"><span style="font-size:10px; margin-right:6px;">▼</span>' + esc(dc.label || 'Discount') + '</div>' +
-        '<div style="width:150px; padding:12px 8px; text-align:right; color:#5A5548;">' + esc(typeLabel) + '</div>' +
-        '<div style="width:130px; padding:12px 16px; text-align:right; font-weight:600; color:#3A6B1A;">−' + money(dc.amount) + '</div>' +
+      body += '<div class="pv-row" style="display:flex; border-bottom:1px solid #EDE8E0; background:#FFFFFF;">' +
+        '<div class="pv-desc" style="flex:1; min-width:0; padding:12px 16px; color:#3A6B1A;"><span style="font-size:10px; margin-right:6px;">▼</span>' + esc(dc.label || 'Discount') + '</div>' +
+        '<div class="pv-mid" style="width:150px; padding:12px 8px; text-align:right; color:#5A5548;">' + esc(typeLabel) + '</div>' +
+        '<div class="pv-amt" style="width:130px; padding:12px 16px; text-align:right; font-weight:600; color:#3A6B1A;">−' + money(dc.amount) + '</div>' +
+        rowLine(typeLabel) +
         '</div>';
     });
   }
