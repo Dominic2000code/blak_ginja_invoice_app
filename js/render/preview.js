@@ -85,7 +85,7 @@ export function renderPreview() {
   if (c.discounts.length) {
     body += groupHeaderRow('Discounts', '#3A6B1A');
     c.discounts.forEach((dc) => {
-      const typeLabel = dc.type === 'percent' ? ((parseFloat(dc.value) || 0) + '%') : 'Fixed';
+      const typeLabel = dc.type === 'percent' ? (dc.rate + '%') : 'Fixed';
       body += '<div style="display:flex; border-bottom:1px solid #EDE8E0; background:#FFFFFF;">' +
         '<div style="flex:1; min-width:0; padding:12px 16px; color:#3A6B1A;"><span style="font-size:10px; margin-right:6px;">▼</span>' + esc(dc.label || 'Discount') + '</div>' +
         '<div style="width:150px; padding:12px 8px; text-align:right; color:#5A5548;">' + esc(typeLabel) + '</div>' +

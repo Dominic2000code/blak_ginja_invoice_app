@@ -7,14 +7,13 @@ import {
 } from './actions.js';
 import { renderLineItems, updateRowAmount } from './render/editor.js';
 import { renderPreview } from './render/preview.js';
-import { downloadPdf } from './pdf.js';
+import { downloadPdf, printInvoice } from './pdf.js';
 
-export function bindStaticInput(id, key, afterPreview) {
+export function bindStaticInput(id, key) {
   const input = el(id);
   input.addEventListener('input', (e) => {
     state[key] = e.target.value;
     renderPreview();
-    if (afterPreview) afterPreview();
   });
 }
 
@@ -154,7 +153,7 @@ export function bindEvents() {
   el('btn-addpercent').addEventListener('click', () => { addDiscount('percent'); });
 
   el('btn-pdf').addEventListener('click', downloadPdf);
-  el('btn-print').addEventListener('click', () => { window.print(); });
+  el('btn-print').addEventListener('click', printInvoice);
 }
 
 export function setInitialFieldValues() {

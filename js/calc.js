@@ -12,10 +12,16 @@ export function calc(state) {
   const subtotal = state.mode === 'bar'
     ? pkgs.reduce((s, p) => s + p.amount, 0)
     : items.reduce((s, it) => s + it.amount, 0);
-  const discounts = state.discounts.map((dc) => {
-    const v = parseFloat(dc.value) || 0;
-    const amount = dc.type === 'percent' ? subtotal * v / 100 : v;
-    return { id: dc.id, label: dc.label, type: dc.type, value: dc.value, amount: amount };
+  // Each mode keeps its own discounts. Negative values count as 0, percentages
+  // are capped at 100%, and discounts never take the total below zero.
+  let remaining = Math.max(subtotal, 0);
+  const discounts = state.discounts.filter((dc) => dc.mode === state.mode).map((dc) => {
+    const v = Math.max(parseFloat(dc.value) || 0, 0);
+    const rate = dc.type === 'percent' ? Math.min(v, 100) : 0;
+    const wanted = dc.type === 'percent' ? subtotal * rate / 100 : v;
+    const amount = Math.min(wanted, remaining);
+    remaining -= amount;
+    return { id: dc.id, label: dc.label, type: dc.type, value: dc.value, rate: rate, amount: amount };
   });
   const total = subtotal - discounts.reduce((s, dc) => s + dc.amount, 0);
   return { items: items, pkgs: pkgs, subtotal: subtotal, discounts: discounts, total: total };

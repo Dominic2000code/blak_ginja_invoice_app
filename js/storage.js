@@ -1,8 +1,9 @@
 import { STORAGE_KEY, MODE_KEY } from './config.js';
 
 // localStorage may be unavailable (private mode, file://, blocked). Fall back to a
-// session-only counter so nothing ever throws.
+// session-only value so nothing ever throws.
 let sessionCounter = 0;
+let sessionMode = 'bulk';
 
 export function readLastNo() {
   try {
@@ -20,9 +21,10 @@ export function writeLastNo(n) {
 }
 
 export function readMode() {
-  try { return localStorage.getItem(MODE_KEY) === 'bar' ? 'bar' : 'bulk'; } catch (e) { return 'bulk'; }
+  try { return localStorage.getItem(MODE_KEY) === 'bar' ? 'bar' : 'bulk'; } catch (e) { return sessionMode; }
 }
 
 export function writeMode(m) {
+  sessionMode = m;
   try { localStorage.setItem(MODE_KEY, m); } catch (e) {}
 }

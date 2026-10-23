@@ -5,6 +5,14 @@ import { attachLogoFallbacks } from './logo-fallback.js';
 
 attachLogoFallbacks();
 
+// The font stylesheet loads as media="print" so it doesn't block rendering, then
+// switches to all media once loaded. Done here instead of an inline onload so a
+// strict Content-Security-Policy won't block it.
+document.querySelectorAll('link[data-async-css]').forEach((link) => {
+  if (link.sheet) link.media = 'all';
+  else link.addEventListener('load', () => { link.media = 'all'; }, { once: true });
+});
+
 function init() {
   setInitialFieldValues();
   renderMode();

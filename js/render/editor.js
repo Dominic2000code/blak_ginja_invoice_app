@@ -113,7 +113,7 @@ export function renderBarPkgs() {
     html += '<div style="display:grid; grid-template-columns:minmax(0,1fr) 96px auto; gap:6px; margin-top:12px;">' +
         '<input type="text" placeholder="Other item" aria-label="Other included item" class="inp-sm" data-id="' + p.id + '" data-field="extraDesc" value="' + escAttr(p.extraDesc) + '" style="width:100%; padding:7px 9px; border:1px solid #E3D9C8; border-radius:6px; font-size:13px; color:#1C1C1C; background:#FFFFFF; outline:none; min-width:0;">' +
         '<select aria-label="Other item category" data-id="' + p.id + '" data-field="extraCat" style="padding:7px 4px; border:1px solid #E3D9C8; border-radius:6px; font-size:13px; color:#1C1C1C; background:#FFFFFF; outline:none;">' +
-          BAR_CATALOG.map((g) => '<option value="' + g.name + '"' + (p.extraCat === g.name ? ' selected' : '') + '>' + g.name + '</option>').join('') +
+          BAR_CATALOG.map((g) => '<option value="' + escAttr(g.name) + '"' + (p.extraCat === g.name ? ' selected' : '') + '>' + esc(g.name) + '</option>').join('') +
         '</select>' +
         '<button type="button" class="btn-add" style="padding:7px 12px;" data-action="add-pkg-extra" data-id="' + p.id + '">Add</button>' +
       '</div>' +
@@ -137,10 +137,11 @@ export function renderMode() {
 // ---------- discounts editor ----------
 export function renderDiscounts() {
   const container = el('discounts-list');
-  if (state.discounts.length === 0) { container.innerHTML = ''; return; }
+  const list = state.discounts.filter((dc) => dc.mode === state.mode);
+  if (list.length === 0) { container.innerHTML = ''; return; }
   let html = '<div style="display:grid; grid-template-columns:1fr 100px 70px 24px; gap:6px; font-size:10.5px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:#5A5548; margin-bottom:6px; padding:0 2px;">' +
     '<div>Label</div><div>Type</div><div style="text-align:right;">Value</div><div></div></div>';
-  state.discounts.forEach((dc) => {
+  list.forEach((dc) => {
     html += '<div style="display:grid; grid-template-columns:1fr 100px 70px 24px; gap:6px; align-items:center; margin-bottom:6px;">' +
       '<input type="text" aria-label="Discount label" class="inp-sm" data-id="' + dc.id + '" data-field="label" value="' + escAttr(dc.label) + '" style="width:100%; padding:7px 9px; border:1px solid #E3D9C8; border-radius:6px; font-size:13px; color:#1C1C1C; background:#FFFFFF; outline:none; min-width:0;">' +
       '<select aria-label="Discount type" data-id="' + dc.id + '" data-field="type" style="width:100%; padding:7px 4px; border:1px solid #E3D9C8; border-radius:6px; font-size:12.5px; color:#1C1C1C; background:#FFFFFF; outline:none;">' +

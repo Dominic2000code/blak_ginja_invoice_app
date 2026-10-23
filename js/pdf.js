@@ -37,14 +37,26 @@ export function downloadPdf() {
       pagebreak: { mode: ['css', 'legacy'] }
     };
     return html2pdf().set(opts).from(elp).save().then(() => {
-      const n = parseInt(num, 10);
-      if (!isNaN(n) && n > 0) writeLastNo(n);
+      recordInvoiceNo(num);
       setPdfBusy(false);
     });
   }).catch(() => {
     setPdfBusy(false);
     alert('Could not create the PDF. Please use the Print button instead.');
   });
+}
+
+// Remember the issued invoice number so the next invoice starts one higher.
+// Uses the last run of digits, so "INV-007" and "2026-014" count as 7 and 14.
+export function recordInvoiceNo(invNo) {
+  const m = String(invNo || '').match(/(\d+)\D*$/);
+  const n = m ? parseInt(m[1], 10) : NaN;
+  if (!isNaN(n) && n > 0) writeLastNo(n);
+}
+
+export function printInvoice() {
+  window.print();
+  recordInvoiceNo((state.invNo || '').trim() || '001');
 }
 
 export function setPdfBusy(busy) {
