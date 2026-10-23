@@ -1,0 +1,8 @@
+@media print {
+  body { background: #FFFFFF !important; }
+  #editor-panel, #action-bar { display: none !important; }
+  #app { display: block !important; height: auto !important; overflow: visible !important; }
+  #preview-wrap { padding: 0 !important; overflow: visible !important; background: #FFFFFF !important; }
+  #invoice-page { box-shadow: none !important; margin: 0 auto !important; width: 100% !important; max-width: 794px; }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+}
