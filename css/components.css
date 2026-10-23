@@ -25,7 +25,9 @@
   background: var(--sheet-white); color: var(--ledger-ink); font-size: 12.5px; cursor: pointer;
   transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
-.chip.flash { background: var(--leaf-wash); border-color: var(--garden-leaf); color: var(--garden-leaf); animation: chipPop 0.35s ease; }
+/* .chip.flash:hover too, so the "added" flash isn't hidden by the hover style
+   while the mouse is still over the chip you just clicked */
+.chip.flash, .chip.flash:hover { background: var(--leaf-wash); border-color: var(--garden-leaf); color: var(--garden-leaf); animation: chipPop 0.35s ease; }
 /* Hover styles only where a real pointer hovers; on touch they would stick after a tap. */
 @media (hover: hover) {
   .chip:hover {
@@ -57,3 +59,11 @@
 .chip.toggle.on, .chip.toggle.on:hover { background: var(--leaf-wash); color: var(--garden-leaf); font-weight: 600; }
 .chip.toggle.on { border-color: var(--garden-leaf); }
 @media (hover: hover) { .chip.toggle.on:hover { border-color: var(--ginger-root); } }
+
+/* Reduced motion: drop the movement (lift, press-shrink, pop) but keep the
+   colour feedback, so adding an item still flashes leaf green. */
+@media (prefers-reduced-motion: reduce) {
+  .chip { transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease; }
+  .chip.flash, .chip.flash:hover { animation: none; }
+  .chip:hover, .chip:active { transform: none; }
+}
