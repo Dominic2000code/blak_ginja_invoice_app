@@ -51,7 +51,7 @@ export function renderLineItems() {
           '</label>' +
         '</div>' +
         (isDrink && it.sizeCustom
-          ? '<input type="text" placeholder="Type a size, e.g. 500ml" aria-label="Custom size" data-id="' + it.id + '" data-field="size" value="' + escAttr(it.size) + '" style="width:100%; margin-top:6px; padding:7px 9px; border:1px solid #E8820C; border-radius:6px; font-size:13px; color:#1C1C1C; background:#FDF3E3; outline:none;">'
+          ? '<input type="text" placeholder="Type a size, e.g. 500ml" aria-label="Custom size" data-id="' + it.id + '" data-field="size" value="' + escAttr(it.size) + '" style="width:100%; margin-top:6px; padding:7px 9px; border:1px solid #A65800; border-radius:6px; font-size:13px; color:#1C1C1C; background:#FDF3E3; outline:none;">'
           : '') +
         '</div>';
     });
@@ -95,7 +95,7 @@ export function renderBarPkgs() {
           '<input type="number" min="0" step="0.01" placeholder="e.g. 25" class="inp-sm" data-id="' + p.id + '" data-field="rate" value="' + escAttr(p.rate) + '" style="width:100%; padding:7px 8px; border:1px solid #E3D9C8; border-radius:6px; font-size:13px; color:#1C1C1C; background:#FFFFFF; outline:none; text-align:right; min-width:0;">' +
         '</label>' +
         '<div style="' + fieldLabel + '">Amount' +
-          '<div data-pkg-amount-id="' + p.id + '" style="padding:7px 8px; border-radius:6px; background:#FDF3E3; font-size:13px; font-weight:600; letter-spacing:0; text-transform:none; color:#C46D08; text-align:right; white-space:nowrap; overflow:hidden;">' + money(pkgAmount(p)) + '</div>' +
+          '<div data-pkg-amount-id="' + p.id + '" style="padding:7px 8px; border-radius:6px; background:#FDF3E3; font-size:13px; font-weight:600; letter-spacing:0; text-transform:none; color:#A65800; text-align:right; white-space:nowrap; overflow:hidden;">' + money(pkgAmount(p)) + '</div>' +
         '</div>' +
       '</div>' +
       '<div style="font-size:10.5px; font-weight:600; letter-spacing:1.4px; text-transform:uppercase; color:#5A5548; margin:14px 0 2px;">Included items · ' + p.included.length + ' selected</div>';

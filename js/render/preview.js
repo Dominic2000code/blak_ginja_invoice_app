@@ -44,7 +44,7 @@ export function renderPreview() {
   // table body
   let body = '';
   if (isBar) {
-    body += groupHeaderRow('Mobile Bar', '#E8820C');
+    body += groupHeaderRow('Mobile Bar', '#D97706');
     c.pkgs.forEach((row, i) => {
       const p = row.pkg;
       const bg = i % 2 === 1 ? '#FDFAF5' : '#FFFFFF';
@@ -69,7 +69,7 @@ export function renderPreview() {
     CATEGORY_ORDER.forEach((name) => {
       const rows = c.items.filter((it) => it.cat === name);
       if (!rows.length) return;
-      body += groupHeaderRow(name, '#E8820C');
+      body += groupHeaderRow(name, '#D97706');
       rows.forEach((it, i) => {
         const bg = i % 2 === 1 ? '#FDFAF5' : '#FFFFFF';
         body += '<div style="display:flex; border-bottom:1px solid #EDE8E0; background:' + bg + ';">' +
@@ -100,7 +100,7 @@ export function renderPreview() {
   c.discounts.forEach((dc) => {
     totals += '<div style="display:flex; justify-content:space-between; padding:5px 0; font-size:14px; color:#3A6B1A; font-weight:500;"><span>' + esc(dc.label || 'Discount') + '</span><span>−' + money(dc.amount) + '</span></div>';
   });
-  totals += '<div style="display:flex; justify-content:space-between; margin-top:12px; padding-top:14px; border-top:2px solid #E8820C; font-family:\'Playfair Display\', Georgia, serif; font-size:20px; font-weight:700; color:#1C1C1C;"><span>Total</span><span style="color:#C46D08;">' + money(c.total) + '</span></div>';
+  totals += '<div style="display:flex; justify-content:space-between; margin-top:12px; padding-top:14px; border-top:2px solid #D97706; font-family:\'Playfair Display\', Georgia, serif; font-size:20px; font-weight:700; color:#1C1C1C;"><span>Total</span><span style="color:#A65800;">' + money(c.total) + '</span></div>';
   el('pv-totals').innerHTML = totals;
 
   // payment
