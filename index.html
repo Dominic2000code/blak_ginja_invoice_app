@@ -112,7 +112,7 @@
       <!-- Line items -->
       <div style="padding:16px 20px; border-bottom:1px solid var(--divider-linen);">
         <h2 style="font-size:11px; font-weight:600; letter-spacing:1.6px; text-transform:uppercase; color:var(--burnt-ginger); margin-bottom:10px;">Line items</h2>
-        <div id="lineitems"></div>
+        <div id="lineitems"><div style="font-size:12.5px; color:var(--field-loam); background:var(--cream-paper); border:1px dashed var(--husk-border); border-radius:6px; padding:14px; text-align:center;">No items yet. Click an item above to add it.</div></div>
       </div>
       </div>
 
@@ -197,7 +197,7 @@
       <div style="margin-bottom:32px;">
         <div style="background:var(--ginger-wash); border-left:4px solid var(--ginger-root); border-radius:0 6px 6px 0; padding:18px 22px;">
           <div style="font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--burnt-ginger); margin-bottom:8px;">Bill To</div>
-          <div id="pv-billname" style="font-family:'Playfair Display', Georgia, serif; font-size:20px; font-weight:600; color:var(--ledger-ink);"></div>
+          <div id="pv-billname" style="font-family:'Playfair Display', Georgia, serif; font-size:20px; font-weight:600; color:var(--ledger-ink);">--</div>
           <div id="pv-location" style="display:none; font-size:13px; color:var(--ledger-ink); margin-top:2px;"></div>
           <div id="pv-contact-wrap" style="display:none;">
             <div id="pv-contact" style="font-size:12.5px; color:var(--field-loam); margin-top:5px;"></div>
@@ -205,16 +205,18 @@
         </div>
       </div>
 
-      <!-- Line items table -->
+      <!-- Line items table. The table, totals and payment details ship pre-filled with
+           the fresh-page (bulk, no items) state so the preview does not jump on load;
+           js/render/preview.js replaces this content on init. -->
       <div style="border-radius:8px; overflow:hidden; box-shadow:var(--shadow-table); margin-bottom:30px;">
-        <div id="pv-thead" style="display:flex; background:var(--ledger-ink); color:var(--sheet-white);"></div>
-        <div id="pv-tbody"></div>
+        <div id="pv-thead" style="display:flex; background:var(--ledger-ink); color:var(--sheet-white);"><div style="flex:1; min-width:0; padding:13px 16px; font-size:11px; font-weight:600; letter-spacing:1.2px; text-transform:uppercase;">Description</div><div class="pv-mid" style="width:60px; padding:13px 8px; font-size:11px; font-weight:600; letter-spacing:1.2px; text-transform:uppercase; text-align:center;">Qty</div><div class="pv-mid" style="width:80px; padding:13px 8px; font-size:11px; font-weight:600; letter-spacing:1.2px; text-transform:uppercase; text-align:center;">Size</div><div class="pv-mid" style="width:100px; padding:13px 8px; font-size:11px; font-weight:600; letter-spacing:1.2px; text-transform:uppercase; text-align:center;">Rate</div><div class="pv-amt" style="width:130px; padding:13px 16px; font-size:11px; font-weight:600; letter-spacing:1.2px; text-transform:uppercase; text-align:right;">Amount</div></div>
+        <div id="pv-tbody"><div style="padding:24px 16px; text-align:center; color:var(--field-loam); font-size:13px; background:var(--sheet-white);">No items yet. Add items in the editor to see them here.</div></div>
       </div>
 
       <!-- Totals -->
       <div style="display:flex; justify-content:flex-end; margin-bottom:38px;">
         <div class="pv-totals-box" style="width:290px; border-top:2px solid var(--tan-rule); padding-top:14px;">
-          <div id="pv-totals"></div>
+          <div id="pv-totals"><div style="display:flex; justify-content:space-between; padding:5px 0; font-size:14px; color:var(--field-loam);"><span>Subtotal</span><span>₵0.00</span></div><div style="display:flex; justify-content:space-between; margin-top:12px; padding-top:14px; border-top:2px solid var(--ginger-root); font-family:'Playfair Display', Georgia, serif; font-size:20px; font-weight:700; color:var(--ledger-ink);"><span>Total</span><span style="color:var(--burnt-ginger);">₵0.00</span></div></div>
         </div>
       </div>
 
@@ -222,14 +224,14 @@
       <div class="pv-pay" style="background:var(--ledger-ink); color:var(--sheet-white); border-radius:8px; padding:24px 28px; display:grid; grid-template-columns:1fr 1fr; gap:20px; font-size:13px;">
         <div>
           <div style="font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--ginger-root); font-weight:600; margin-bottom:8px;">Payment Instructions</div>
-          <div style="line-height:1.7; color:var(--smoke-on-ink);">Please pay via <span style="color:var(--sheet-white); font-weight:600;">Mobile Money</span> or <span style="color:var(--sheet-white); font-weight:600;">Bank Transfer</span> to <span id="pv-payname"></span>.</div>
+          <div style="line-height:1.7; color:var(--smoke-on-ink);">Please pay via <span style="color:var(--sheet-white); font-weight:600;">Mobile Money</span> or <span style="color:var(--sheet-white); font-weight:600;">Bank Transfer</span> to <span id="pv-payname">Mary Bluawofogbe</span>.</div>
         </div>
         <div>
           <div style="font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--ginger-root); font-weight:600; margin-bottom:8px;">Payment Details</div>
           <div style="line-height:1.7; color:var(--smoke-on-ink);">
-            <span style="color:var(--sheet-white); font-weight:600;">Mobile Money:</span> <span id="pv-momo"></span><br>
-            <span style="color:var(--sheet-white); font-weight:600;">Bank:</span> <span id="pv-bank"></span><br>
-            <span style="color:var(--sheet-white); font-weight:600;">Account No:</span> <span id="pv-account"></span>
+            <span style="color:var(--sheet-white); font-weight:600;">Mobile Money:</span> <span id="pv-momo">+233 55 518 1595</span><br>
+            <span style="color:var(--sheet-white); font-weight:600;">Bank:</span> <span id="pv-bank">CAL Bank</span><br>
+            <span style="color:var(--sheet-white); font-weight:600;">Account No:</span> <span id="pv-account">1400009574281</span>
           </div>
         </div>
       </div>
