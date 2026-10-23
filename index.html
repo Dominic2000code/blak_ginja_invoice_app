@@ -30,7 +30,7 @@
     <div id="editor-scroll" style="flex:1; overflow-y:auto; min-height:0;">
 
       <div style="display:flex; align-items:center; gap:12px; padding:16px 20px; border-bottom:1px solid #F0E9DC;">
-        <img src="logo.png" alt="Blak Ginja logo" width="46" height="46" decoding="async" onerror="brandLogoFallback(this)" style="width:46px; height:46px; object-fit:contain;">
+        <img src="logo.png" alt="Blak Ginja logo" width="46" height="46" decoding="async" style="width:46px; height:46px; object-fit:contain;">
         <div>
           <div style="font-family:'Playfair Display', Georgia, serif; font-size:18px; font-weight:700; line-height:1.15;">Blak <span style="color:#E8820C;">Ginja</span></div>
           <div style="font-size:11.5px; color:#5A5548; margin-top:1px;">Invoice creator</div>
@@ -173,7 +173,7 @@
       <!-- Header -->
       <div style="display:flex; align-items:center; justify-content:space-between; gap:24px; padding-bottom:26px; border-bottom:2px solid #D4B896; margin-bottom:32px;">
         <div style="display:flex; align-items:center; gap:18px;">
-          <img src="logo.png" alt="Blak Ginja logo" width="88" height="88" decoding="async" fetchpriority="high" onerror="brandLogoFallback(this)" style="width:88px; height:88px; object-fit:contain; flex-shrink:0;">
+          <img src="logo.png" alt="Blak Ginja logo" width="88" height="88" decoding="async" fetchpriority="high" style="width:88px; height:88px; object-fit:contain; flex-shrink:0;">
           <div>
             <div style="font-family:'Playfair Display', Georgia, serif; font-size:28px; font-weight:700; color:#1C1C1C; letter-spacing:-0.5px; line-height:1.1;">Blak <span style="color:#E8820C;">Ginja</span></div>
             <div style="font-size:11.5px; font-weight:300; color:#5A5548; letter-spacing:1.5px; text-transform:uppercase; margin-top:3px;">Cocktails · Juices · Farm</div>
@@ -937,9 +937,15 @@
 // Logo fallback: if logo.png is missing, draw a simple brand badge so the site and
 // the PDF still render. Replace logo.png with the real logo to override this.
 function brandLogoFallback(img) {
-  img.onerror = null;
   img.src = "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ccircle%20cx='50'%20cy='50'%20r='49'%20fill='%231C1C1C'/%3E%3Ccircle%20cx='50'%20cy='50'%20r='46'%20fill='none'%20stroke='%23E8820C'%20stroke-width='2.5'/%3E%3Ctext%20x='50'%20y='62'%20font-family='Georgia,serif'%20font-size='34'%20font-weight='700'%20fill='%23E8820C'%20text-anchor='middle'%3EBG%3C/text%3E%3C/svg%3E";
 }
+
+// Attach the fallback from JS (no inline onerror). An image that already failed
+// before this ran is complete with zero natural width, so swap it straight away.
+document.querySelectorAll('img[src="logo.png"]').forEach(function (img) {
+  if (img.complete && img.naturalWidth === 0) brandLogoFallback(img);
+  else img.addEventListener('error', function () { brandLogoFallback(img); }, { once: true });
+});
 
 // Register the service worker so the app is installable and works offline.
 // Only runs over http/https (not when opened as a local file), and uses a relative
