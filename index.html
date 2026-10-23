@@ -23,110 +23,110 @@
 <link rel="stylesheet" href="./css/print.css">
 </head>
 <body>
-<main id="app" style="display:flex; height:100vh; overflow:hidden; background:#FAF7F2; color:#1C1C1C; font-family:'DM Sans', Arial, sans-serif; font-size:14px; line-height:1.5;">
+<main id="app" style="display:flex; height:100vh; overflow:hidden; background:var(--cream-paper); color:var(--ledger-ink); font-family:'DM Sans', Arial, sans-serif; font-size:14px; line-height:1.5;">
 
   <!-- ══════════ EDITOR PANEL ══════════ -->
-  <section id="editor-panel" aria-label="Invoice editor" style="width:440px; flex-shrink:0; background:#FFFFFF; border-right:1px solid #EAE2D4; display:flex; flex-direction:column;">
+  <section id="editor-panel" aria-label="Invoice editor" style="width:440px; flex-shrink:0; background:var(--sheet-white); border-right:1px solid var(--pale-husk); display:flex; flex-direction:column;">
     <div id="editor-scroll" style="flex:1; overflow-y:auto; min-height:0;">
 
-      <div style="display:flex; align-items:center; gap:12px; padding:16px 20px; border-bottom:1px solid #F0E9DC;">
+      <div style="display:flex; align-items:center; gap:12px; padding:16px 20px; border-bottom:1px solid var(--divider-linen);">
         <img src="logo.png" alt="Blak Ginja logo" width="46" height="46" decoding="async" style="width:46px; height:46px; object-fit:contain;">
         <div>
-          <h1 style="font-family:'Playfair Display', Georgia, serif; font-size:18px; font-weight:700; line-height:1.15;">Blak <span style="color:#A65800;">Ginja</span></h1>
-          <div style="font-size:11.5px; color:#5A5548; margin-top:1px;">Invoice creator</div>
+          <h1 style="font-family:'Playfair Display', Georgia, serif; font-size:18px; font-weight:700; line-height:1.15;">Blak <span style="color:var(--burnt-ginger);">Ginja</span></h1>
+          <div style="font-size:11.5px; color:var(--field-loam); margin-top:1px;">Invoice creator</div>
         </div>
       </div>
 
       <!-- Mode toggle -->
-      <div style="padding:14px 20px; border-bottom:1px solid #F0E9DC;">
-        <div role="group" aria-label="Invoice type" style="display:grid; grid-template-columns:1fr 1fr; gap:4px; background:#F4EEE3; border-radius:10px; padding:4px;">
+      <div style="padding:14px 20px; border-bottom:1px solid var(--divider-linen);">
+        <div role="group" aria-label="Invoice type" style="display:grid; grid-template-columns:1fr 1fr; gap:4px; background:var(--mode-track); border-radius:10px; padding:4px;">
           <button id="btn-mode-bulk" type="button" class="mode-tab active" aria-pressed="true">Bulk order</button>
           <button id="btn-mode-bar" type="button" class="mode-tab" aria-pressed="false">Mobile bar</button>
         </div>
-        <div id="mode-hint" style="font-size:12px; color:#5A5548; margin-top:8px;">Bottles, snacks and services priced per item.</div>
+        <div id="mode-hint" style="font-size:12px; color:var(--field-loam); margin-top:8px;">Bottles, snacks and services priced per item.</div>
       </div>
 
       <!-- Invoice details -->
-      <div style="padding:16px 20px; border-bottom:1px solid #F0E9DC;">
-        <h2 style="font-size:11px; font-weight:600; letter-spacing:1.6px; text-transform:uppercase; color:#A65800; margin-bottom:10px;">Invoice details</h2>
+      <div style="padding:16px 20px; border-bottom:1px solid var(--divider-linen);">
+        <h2 style="font-size:11px; font-weight:600; letter-spacing:1.6px; text-transform:uppercase; color:var(--burnt-ginger); margin-bottom:10px;">Invoice details</h2>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
           <div>
-            <label for="inp-invno" style="display:block; font-size:12px; font-weight:500; color:#5A5548; margin-bottom:4px;">Invoice number</label>
-            <input id="inp-invno" type="text" class="inp" style="width:100%; padding:8px 10px; border:1px solid #E3D9C8; border-radius:6px; font-size:13.5px; color:#1C1C1C; background:#FFFFFF; outline:none;">
+            <label for="inp-invno" style="display:block; font-size:12px; font-weight:500; color:var(--field-loam); margin-bottom:4px;">Invoice number</label>
+            <input id="inp-invno" type="text" style="width:100%; padding:8px 10px; border:1px solid var(--husk-border); border-radius:6px; font-size:13.5px; color:var(--ledger-ink); background:var(--sheet-white); outline:none;">
           </div>
           <div>
-            <label for="inp-date" style="display:block; font-size:12px; font-weight:500; color:#5A5548; margin-bottom:4px;">Date</label>
-            <input id="inp-date" type="date" class="inp" style="width:100%; padding:8px 10px; border:1px solid #E3D9C8; border-radius:6px; font-size:13.5px; color:#1C1C1C; background:#FFFFFF; outline:none;">
+            <label for="inp-date" style="display:block; font-size:12px; font-weight:500; color:var(--field-loam); margin-bottom:4px;">Date</label>
+            <input id="inp-date" type="date" style="width:100%; padding:8px 10px; border:1px solid var(--husk-border); border-radius:6px; font-size:13.5px; color:var(--ledger-ink); background:var(--sheet-white); outline:none;">
           </div>
         </div>
       </div>
 
       <!-- Bill to -->
-      <div style="padding:16px 20px; border-bottom:1px solid #F0E9DC;">
-        <h2 style="font-size:11px; font-weight:600; letter-spacing:1.6px; text-transform:uppercase; color:#A65800; margin-bottom:10px;">Bill to</h2>
+      <div style="padding:16px 20px; border-bottom:1px solid var(--divider-linen);">
+        <h2 style="font-size:11px; font-weight:600; letter-spacing:1.6px; text-transform:uppercase; color:var(--burnt-ginger); margin-bottom:10px;">Bill to</h2>
         <div style="margin-bottom:10px;">
-          <label for="inp-clientname" style="display:block; font-size:12px; font-weight:500; color:#5A5548; margin-bottom:4px;">Client name</label>
-          <input id="inp-clientname" type="text" class="inp" placeholder="Client or company name" style="width:100%; padding:8px 10px; border:1px solid #E3D9C8; border-radius:6px; font-size:13.5px; color:#1C1C1C; background:#FFFFFF; outline:none;">
+          <label for="inp-clientname" style="display:block; font-size:12px; font-weight:500; color:var(--field-loam); margin-bottom:4px;">Client name</label>
+          <input id="inp-clientname" type="text" placeholder="Client or company name" style="width:100%; padding:8px 10px; border:1px solid var(--husk-border); border-radius:6px; font-size:13.5px; color:var(--ledger-ink); background:var(--sheet-white); outline:none;">
         </div>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
           <div>
-            <label for="inp-clientphone" style="display:block; font-size:12px; font-weight:500; color:#5A5548; margin-bottom:4px;">Phone (optional)</label>
-            <input id="inp-clientphone" type="text" class="inp" style="width:100%; padding:8px 10px; border:1px solid #E3D9C8; border-radius:6px; font-size:13.5px; color:#1C1C1C; background:#FFFFFF; outline:none;">
+            <label for="inp-clientphone" style="display:block; font-size:12px; font-weight:500; color:var(--field-loam); margin-bottom:4px;">Phone (optional)</label>
+            <input id="inp-clientphone" type="text" style="width:100%; padding:8px 10px; border:1px solid var(--husk-border); border-radius:6px; font-size:13.5px; color:var(--ledger-ink); background:var(--sheet-white); outline:none;">
           </div>
           <div>
-            <label for="inp-clientemail" style="display:block; font-size:12px; font-weight:500; color:#5A5548; margin-bottom:4px;">Email (optional)</label>
-            <input id="inp-clientemail" type="text" class="inp" style="width:100%; padding:8px 10px; border:1px solid #E3D9C8; border-radius:6px; font-size:13.5px; color:#1C1C1C; background:#FFFFFF; outline:none;">
+            <label for="inp-clientemail" style="display:block; font-size:12px; font-weight:500; color:var(--field-loam); margin-bottom:4px;">Email (optional)</label>
+            <input id="inp-clientemail" type="text" style="width:100%; padding:8px 10px; border:1px solid var(--husk-border); border-radius:6px; font-size:13.5px; color:var(--ledger-ink); background:var(--sheet-white); outline:none;">
           </div>
         </div>
         <div style="margin-top:10px;">
-          <label for="inp-clientlocation" style="display:block; font-size:12px; font-weight:500; color:#5A5548; margin-bottom:4px;">Location (optional)</label>
-          <input id="inp-clientlocation" type="text" class="inp" placeholder="e.g. Tema" style="width:100%; padding:8px 10px; border:1px solid #E3D9C8; border-radius:6px; font-size:13.5px; color:#1C1C1C; background:#FFFFFF; outline:none;">
+          <label for="inp-clientlocation" style="display:block; font-size:12px; font-weight:500; color:var(--field-loam); margin-bottom:4px;">Location (optional)</label>
+          <input id="inp-clientlocation" type="text" placeholder="e.g. Tema" style="width:100%; padding:8px 10px; border:1px solid var(--husk-border); border-radius:6px; font-size:13.5px; color:var(--ledger-ink); background:var(--sheet-white); outline:none;">
         </div>
       </div>
 
       <div id="bulk-sections">
       <!-- Add items -->
-      <div style="padding:16px 20px; border-bottom:1px solid #F0E9DC;">
-        <h2 style="font-size:11px; font-weight:600; letter-spacing:1.6px; text-transform:uppercase; color:#A65800; margin-bottom:4px;">Add items</h2>
-        <div style="font-size:12px; color:#5A5548; margin-bottom:12px;">Click an item to add it, then enter its rate.</div>
+      <div style="padding:16px 20px; border-bottom:1px solid var(--divider-linen);">
+        <h2 style="font-size:11px; font-weight:600; letter-spacing:1.6px; text-transform:uppercase; color:var(--burnt-ginger); margin-bottom:4px;">Add items</h2>
+        <div style="font-size:12px; color:var(--field-loam); margin-bottom:12px;">Click an item to add it, then enter its rate.</div>
 
         <div id="catalog"></div>
 
-        <div style="background:#FAF7F2; border:1px solid #F0E9DC; border-radius:8px; padding:12px; margin-top:4px;">
-          <div style="font-size:12px; font-weight:600; color:#5A5548; margin-bottom:8px;">Add custom item</div>
-          <input id="inp-customdesc" type="text" placeholder="Description" aria-label="Custom item description" class="inp" style="width:100%; padding:8px 10px; border:1px solid #E3D9C8; border-radius:6px; font-size:13.5px; color:#1C1C1C; background:#FFFFFF; outline:none; margin-bottom:8px;">
+        <div style="background:var(--cream-paper); border:1px solid var(--divider-linen); border-radius:8px; padding:12px; margin-top:4px;">
+          <div style="font-size:12px; font-weight:600; color:var(--field-loam); margin-bottom:8px;">Add custom item</div>
+          <input id="inp-customdesc" type="text" placeholder="Description" aria-label="Custom item description" style="width:100%; padding:8px 10px; border:1px solid var(--husk-border); border-radius:6px; font-size:13.5px; color:var(--ledger-ink); background:var(--sheet-white); outline:none; margin-bottom:8px;">
           <div class="custom-row" style="display:grid; grid-template-columns:1fr 64px 84px auto; gap:6px; align-items:center;">
-            <select id="sel-customcat" aria-label="Custom item category" style="padding:8px 6px; border:1px solid #E3D9C8; border-radius:6px; font-size:13px; color:#1C1C1C; background:#FFFFFF; outline:none;">
+            <select id="sel-customcat" aria-label="Custom item category" style="padding:8px 6px; border:1px solid var(--husk-border); border-radius:6px; font-size:13px; color:var(--ledger-ink); background:var(--sheet-white); outline:none;">
               <option value="Drinks">Drinks</option>
               <option value="Snacks">Snacks</option>
               <option value="Services">Services</option>
               <option value="Other">Other</option>
             </select>
-            <input id="inp-customqty" type="number" min="0" placeholder="Qty" aria-label="Custom item quantity" class="inp-sm" style="width:100%; padding:8px 8px; border:1px solid #E3D9C8; border-radius:6px; font-size:13px; color:#1C1C1C; background:#FFFFFF; outline:none;">
-            <input id="inp-customrate" type="number" min="0" step="0.01" placeholder="Rate" aria-label="Custom item rate" class="inp-sm" style="width:100%; padding:8px 8px; border:1px solid #E3D9C8; border-radius:6px; font-size:13px; color:#1C1C1C; background:#FFFFFF; outline:none;">
+            <input id="inp-customqty" type="number" min="0" placeholder="Qty" aria-label="Custom item quantity" style="width:100%; padding:8px 8px; border:1px solid var(--husk-border); border-radius:6px; font-size:13px; color:var(--ledger-ink); background:var(--sheet-white); outline:none;">
+            <input id="inp-customrate" type="number" min="0" step="0.01" placeholder="Rate" aria-label="Custom item rate" style="width:100%; padding:8px 8px; border:1px solid var(--husk-border); border-radius:6px; font-size:13px; color:var(--ledger-ink); background:var(--sheet-white); outline:none;">
             <button id="btn-addcustom" class="btn-add">Add</button>
           </div>
         </div>
       </div>
 
       <!-- Line items -->
-      <div style="padding:16px 20px; border-bottom:1px solid #F0E9DC;">
-        <h2 style="font-size:11px; font-weight:600; letter-spacing:1.6px; text-transform:uppercase; color:#A65800; margin-bottom:10px;">Line items</h2>
+      <div style="padding:16px 20px; border-bottom:1px solid var(--divider-linen);">
+        <h2 style="font-size:11px; font-weight:600; letter-spacing:1.6px; text-transform:uppercase; color:var(--burnt-ginger); margin-bottom:10px;">Line items</h2>
         <div id="lineitems"></div>
       </div>
       </div>
 
       <!-- Mobile bar packages -->
-      <div id="bar-section" style="display:none; padding:16px 20px; border-bottom:1px solid #F0E9DC;">
-        <h2 style="font-size:11px; font-weight:600; letter-spacing:1.6px; text-transform:uppercase; color:#A65800; margin-bottom:4px;">Bar packages</h2>
-        <div style="font-size:12px; color:#5A5548; margin-bottom:12px;">Tick what is included, then enter the number of guests and the rate per head.</div>
+      <div id="bar-section" style="display:none; padding:16px 20px; border-bottom:1px solid var(--divider-linen);">
+        <h2 style="font-size:11px; font-weight:600; letter-spacing:1.6px; text-transform:uppercase; color:var(--burnt-ginger); margin-bottom:4px;">Bar packages</h2>
+        <div style="font-size:12px; color:var(--field-loam); margin-bottom:12px;">Tick what is included, then enter the number of guests and the rate per head.</div>
         <div id="barpkgs"></div>
         <button id="btn-addpkg" type="button" class="btn-disc">+ Add another package</button>
       </div>
 
       <!-- Discounts -->
-      <div style="padding:16px 20px; border-bottom:1px solid #F0E9DC;">
-        <h2 style="font-size:11px; font-weight:600; letter-spacing:1.6px; text-transform:uppercase; color:#A65800; margin-bottom:10px;">Discounts</h2>
+      <div style="padding:16px 20px; border-bottom:1px solid var(--divider-linen);">
+        <h2 style="font-size:11px; font-weight:600; letter-spacing:1.6px; text-transform:uppercase; color:var(--burnt-ginger); margin-bottom:10px;">Discounts</h2>
         <div id="discounts-list"></div>
         <div style="display:flex; gap:8px; margin-top:4px;">
           <button id="btn-addfixed" class="btn-disc">+ Fixed amount</button>
@@ -136,23 +136,23 @@
 
       <!-- Payment details -->
       <div style="padding:16px 20px 22px;">
-        <h2 style="font-size:11px; font-weight:600; letter-spacing:1.6px; text-transform:uppercase; color:#A65800; margin-bottom:10px;">Payment details</h2>
+        <h2 style="font-size:11px; font-weight:600; letter-spacing:1.6px; text-transform:uppercase; color:var(--burnt-ginger); margin-bottom:10px;">Payment details</h2>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;">
           <div>
-            <label for="inp-paymomo" style="display:block; font-size:12px; font-weight:500; color:#5A5548; margin-bottom:4px;">Mobile Money</label>
-            <input id="inp-paymomo" type="text" class="inp-sm" style="width:100%; padding:8px 10px; border:1px solid #E3D9C8; border-radius:6px; font-size:13.5px; color:#1C1C1C; background:#FFFFFF; outline:none;">
+            <label for="inp-paymomo" style="display:block; font-size:12px; font-weight:500; color:var(--field-loam); margin-bottom:4px;">Mobile Money</label>
+            <input id="inp-paymomo" type="text" style="width:100%; padding:8px 10px; border:1px solid var(--husk-border); border-radius:6px; font-size:13.5px; color:var(--ledger-ink); background:var(--sheet-white); outline:none;">
           </div>
           <div>
-            <label for="inp-paybank" style="display:block; font-size:12px; font-weight:500; color:#5A5548; margin-bottom:4px;">Bank</label>
-            <input id="inp-paybank" type="text" class="inp-sm" style="width:100%; padding:8px 10px; border:1px solid #E3D9C8; border-radius:6px; font-size:13.5px; color:#1C1C1C; background:#FFFFFF; outline:none;">
+            <label for="inp-paybank" style="display:block; font-size:12px; font-weight:500; color:var(--field-loam); margin-bottom:4px;">Bank</label>
+            <input id="inp-paybank" type="text" style="width:100%; padding:8px 10px; border:1px solid var(--husk-border); border-radius:6px; font-size:13.5px; color:var(--ledger-ink); background:var(--sheet-white); outline:none;">
           </div>
           <div>
-            <label for="inp-payaccount" style="display:block; font-size:12px; font-weight:500; color:#5A5548; margin-bottom:4px;">Account No</label>
-            <input id="inp-payaccount" type="text" class="inp-sm" style="width:100%; padding:8px 10px; border:1px solid #E3D9C8; border-radius:6px; font-size:13.5px; color:#1C1C1C; background:#FFFFFF; outline:none;">
+            <label for="inp-payaccount" style="display:block; font-size:12px; font-weight:500; color:var(--field-loam); margin-bottom:4px;">Account No</label>
+            <input id="inp-payaccount" type="text" style="width:100%; padding:8px 10px; border:1px solid var(--husk-border); border-radius:6px; font-size:13.5px; color:var(--ledger-ink); background:var(--sheet-white); outline:none;">
           </div>
           <div>
-            <label for="inp-payname" style="display:block; font-size:12px; font-weight:500; color:#5A5548; margin-bottom:4px;">Payable to</label>
-            <input id="inp-payname" type="text" class="inp-sm" style="width:100%; padding:8px 10px; border:1px solid #E3D9C8; border-radius:6px; font-size:13.5px; color:#1C1C1C; background:#FFFFFF; outline:none;">
+            <label for="inp-payname" style="display:block; font-size:12px; font-weight:500; color:var(--field-loam); margin-bottom:4px;">Payable to</label>
+            <input id="inp-payname" type="text" style="width:100%; padding:8px 10px; border:1px solid var(--husk-border); border-radius:6px; font-size:13.5px; color:var(--ledger-ink); background:var(--sheet-white); outline:none;">
           </div>
         </div>
       </div>
@@ -160,82 +160,82 @@
     </div>
 
     <!-- Sticky actions -->
-    <div id="action-bar" style="flex-shrink:0; background:#FFFFFF; border-top:1px solid #EAE2D4; padding:12px 20px; display:flex; gap:10px;">
+    <div id="action-bar" style="flex-shrink:0; background:var(--sheet-white); border-top:1px solid var(--pale-husk); padding:12px 20px; display:flex; gap:10px;">
       <button id="btn-pdf" class="btn-pdf">Download PDF</button>
       <button id="btn-print" class="btn-print">Print</button>
     </div>
   </section>
 
   <!-- ══════════ INVOICE PREVIEW ══════════ -->
-  <section id="preview-wrap" aria-label="Invoice preview" style="flex:1; overflow:auto; padding:32px 24px; background:#F2EDE3;">
-    <div id="invoice-page" style="width:794px; margin:0 auto; background:#FFFFFF; padding:44px 48px; box-shadow:0 8px 40px rgba(60,45,20,0.14); font-size:14px; line-height:1.6; color:#1C1C1C;">
+  <section id="preview-wrap" aria-label="Invoice preview" style="flex:1; overflow:auto; padding:32px 24px; background:var(--counter-linen);">
+    <div id="invoice-page" style="width:794px; margin:0 auto; background:var(--sheet-white); padding:44px 48px; box-shadow:var(--shadow-paper); font-size:14px; line-height:1.6; color:var(--ledger-ink);">
 
       <!-- Header -->
-      <div class="pv-head" style="display:flex; align-items:center; justify-content:space-between; gap:24px; padding-bottom:26px; border-bottom:2px solid #D4B896; margin-bottom:32px;">
+      <div class="pv-head" style="display:flex; align-items:center; justify-content:space-between; gap:24px; padding-bottom:26px; border-bottom:2px solid var(--tan-rule); margin-bottom:32px;">
         <div style="display:flex; align-items:center; gap:18px;">
           <img class="pv-logo" src="logo.png" alt="Blak Ginja logo" width="88" height="88" decoding="async" fetchpriority="high" style="width:88px; height:88px; object-fit:contain; flex-shrink:0;">
           <div>
-            <div style="font-family:'Playfair Display', Georgia, serif; font-size:28px; font-weight:700; color:#1C1C1C; letter-spacing:-0.5px; line-height:1.1;">Blak <span style="color:#D97706;">Ginja</span></div>
-            <div style="font-size:11.5px; font-weight:300; color:#5A5548; letter-spacing:1.5px; text-transform:uppercase; margin-top:3px;">Cocktails · Juices · Farm</div>
-            <div style="font-size:12.5px; color:#5A5548; margin-top:8px; line-height:1.55;">
+            <div style="font-family:'Playfair Display', Georgia, serif; font-size:28px; font-weight:700; color:var(--ledger-ink); letter-spacing:-0.5px; line-height:1.1;">Blak <span style="color:var(--ginger-root);">Ginja</span></div>
+            <div style="font-size:11.5px; font-weight:300; color:var(--field-loam); letter-spacing:1.5px; text-transform:uppercase; margin-top:3px;">Cocktails · Juices · Farm</div>
+            <div style="font-size:12.5px; color:var(--field-loam); margin-top:8px; line-height:1.55;">
               Accra, Ghana<br>
-              <a href="tel:+233555181595" style="color:#A65800; text-decoration:none;">+233 55 518 1595</a><br>
-              <a href="mailto:blakginja@gmail.com" style="color:#A65800; text-decoration:none;">blakginja@gmail.com</a>
+              <a href="tel:+233555181595" style="color:var(--burnt-ginger); text-decoration:none;">+233 55 518 1595</a><br>
+              <a href="mailto:blakginja@gmail.com" style="color:var(--burnt-ginger); text-decoration:none;">blakginja@gmail.com</a>
             </div>
           </div>
         </div>
         <div class="pv-head-meta" style="text-align:right; flex-shrink:0;">
-          <h2 style="font-family:'Playfair Display', Georgia, serif; font-size:38px; font-weight:700; color:#D97706; letter-spacing:2px; line-height:1;">INVOICE</h2>
-          <div style="font-size:13px; color:#5A5548; margin-top:10px; line-height:1.7;">
-            <span style="color:#1C1C1C; font-weight:600;">Date:</span> <span id="pv-date"></span><br>
-            <span style="color:#1C1C1C; font-weight:600;">Invoice #:</span> <span id="pv-invno"></span>
+          <h2 style="font-family:'Playfair Display', Georgia, serif; font-size:38px; font-weight:700; color:var(--ginger-root); letter-spacing:2px; line-height:1;">INVOICE</h2>
+          <div style="font-size:13px; color:var(--field-loam); margin-top:10px; line-height:1.7;">
+            <span style="color:var(--ledger-ink); font-weight:600;">Date:</span> <span id="pv-date"></span><br>
+            <span style="color:var(--ledger-ink); font-weight:600;">Invoice #:</span> <span id="pv-invno"></span>
           </div>
         </div>
       </div>
 
       <!-- Bill to -->
       <div style="margin-bottom:32px;">
-        <div style="background:#FDF3E3; border-left:4px solid #D97706; border-radius:0 6px 6px 0; padding:18px 22px;">
-          <div style="font-size:10px; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:#A65800; margin-bottom:8px;">Bill To</div>
-          <div id="pv-billname" style="font-family:'Playfair Display', Georgia, serif; font-size:20px; font-weight:600; color:#1C1C1C;"></div>
-          <div id="pv-location" style="display:none; font-size:13px; color:#1C1C1C; margin-top:2px;"></div>
+        <div style="background:var(--ginger-wash); border-left:4px solid var(--ginger-root); border-radius:0 6px 6px 0; padding:18px 22px;">
+          <div style="font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--burnt-ginger); margin-bottom:8px;">Bill To</div>
+          <div id="pv-billname" style="font-family:'Playfair Display', Georgia, serif; font-size:20px; font-weight:600; color:var(--ledger-ink);"></div>
+          <div id="pv-location" style="display:none; font-size:13px; color:var(--ledger-ink); margin-top:2px;"></div>
           <div id="pv-contact-wrap" style="display:none;">
-            <div id="pv-contact" style="font-size:12.5px; color:#5A5548; margin-top:5px;"></div>
+            <div id="pv-contact" style="font-size:12.5px; color:var(--field-loam); margin-top:5px;"></div>
           </div>
         </div>
       </div>
 
       <!-- Line items table -->
-      <div style="border-radius:8px; overflow:hidden; box-shadow:0 2px 16px rgba(0,0,0,0.08); margin-bottom:30px;">
-        <div id="pv-thead" style="display:flex; background:#1C1C1C; color:#FFFFFF;"></div>
+      <div style="border-radius:8px; overflow:hidden; box-shadow:var(--shadow-table); margin-bottom:30px;">
+        <div id="pv-thead" style="display:flex; background:var(--ledger-ink); color:var(--sheet-white);"></div>
         <div id="pv-tbody"></div>
       </div>
 
       <!-- Totals -->
       <div style="display:flex; justify-content:flex-end; margin-bottom:38px;">
-        <div class="pv-totals-box" style="width:290px; border-top:2px solid #D4B896; padding-top:14px;">
+        <div class="pv-totals-box" style="width:290px; border-top:2px solid var(--tan-rule); padding-top:14px;">
           <div id="pv-totals"></div>
         </div>
       </div>
 
       <!-- Payment box -->
-      <div class="pv-pay" style="background:#1C1C1C; color:#FFFFFF; border-radius:8px; padding:24px 28px; display:grid; grid-template-columns:1fr 1fr; gap:20px; font-size:13px;">
+      <div class="pv-pay" style="background:var(--ledger-ink); color:var(--sheet-white); border-radius:8px; padding:24px 28px; display:grid; grid-template-columns:1fr 1fr; gap:20px; font-size:13px;">
         <div>
-          <div style="font-size:10px; letter-spacing:2px; text-transform:uppercase; color:#D97706; font-weight:600; margin-bottom:8px;">Payment Instructions</div>
-          <div style="line-height:1.7; color:#D0C8BC;">Please pay via <span style="color:#FFFFFF; font-weight:600;">Mobile Money</span> or <span style="color:#FFFFFF; font-weight:600;">Bank Transfer</span> to <span id="pv-payname"></span>.</div>
+          <div style="font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--ginger-root); font-weight:600; margin-bottom:8px;">Payment Instructions</div>
+          <div style="line-height:1.7; color:var(--smoke-on-ink);">Please pay via <span style="color:var(--sheet-white); font-weight:600;">Mobile Money</span> or <span style="color:var(--sheet-white); font-weight:600;">Bank Transfer</span> to <span id="pv-payname"></span>.</div>
         </div>
         <div>
-          <div style="font-size:10px; letter-spacing:2px; text-transform:uppercase; color:#D97706; font-weight:600; margin-bottom:8px;">Payment Details</div>
-          <div style="line-height:1.7; color:#D0C8BC;">
-            <span style="color:#FFFFFF; font-weight:600;">Mobile Money:</span> <span id="pv-momo"></span><br>
-            <span style="color:#FFFFFF; font-weight:600;">Bank:</span> <span id="pv-bank"></span><br>
-            <span style="color:#FFFFFF; font-weight:600;">Account No:</span> <span id="pv-account"></span>
+          <div style="font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--ginger-root); font-weight:600; margin-bottom:8px;">Payment Details</div>
+          <div style="line-height:1.7; color:var(--smoke-on-ink);">
+            <span style="color:var(--sheet-white); font-weight:600;">Mobile Money:</span> <span id="pv-momo"></span><br>
+            <span style="color:var(--sheet-white); font-weight:600;">Bank:</span> <span id="pv-bank"></span><br>
+            <span style="color:var(--sheet-white); font-weight:600;">Account No:</span> <span id="pv-account"></span>
           </div>
         </div>
       </div>
 
       <!-- Thank you -->
-      <div style="text-align:center; margin-top:26px; font-family:'Playfair Display', Georgia, serif; font-size:16px; color:#5A5548; letter-spacing:0.5px;"><span style="color:#D97706; font-size:13px;">✦</span>&nbsp;&nbsp;Thank you for your business&nbsp;&nbsp;<span style="color:#D97706; font-size:13px;">✦</span></div>
+      <div style="text-align:center; margin-top:26px; font-family:'Playfair Display', Georgia, serif; font-size:16px; color:var(--field-loam); letter-spacing:0.5px;"><span style="color:var(--ginger-root); font-size:13px;">✦</span>&nbsp;&nbsp;Thank you for your business&nbsp;&nbsp;<span style="color:var(--ginger-root); font-size:13px;">✦</span></div>
 
     </div>
   </section>
