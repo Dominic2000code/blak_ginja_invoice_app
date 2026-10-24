@@ -1,8 +1,54 @@
+/* Design tokens: names match DESIGN.md. Every color and shadow in the app
+   (CSS, inline styles and JS templates) references these. */
+:root {
+  /* ginger: Burnt Ginger for action and small text, Ginger Root for display, rules, marks */
+  --ginger-root: #D97706;
+  --burnt-ginger: #A65800;
+  --burnt-ginger-deep: #874600;
+  --garden-leaf: #3A6B1A;
+
+  /* text */
+  --ledger-ink: #1C1C1C;
+  --field-loam: #5A5548;
+  --smoke-on-ink: #D0C8BC;
+
+  /* surfaces */
+  --sheet-white: #FFFFFF;
+  --cream-paper: #FAF7F2;
+  --counter-linen: #F2EDE3;
+  --mode-track: #F4EEE3;
+  --ginger-wash: #FDF3E3;
+  --leaf-wash: #EEF5E8;
+  --row-blush: #FDFAF5;
+
+  /* lines */
+  --leaf-rule: #C8DDB8;
+  --husk-border: #E3D9C8;
+  --field-edge: #978B77;
+  --pale-husk: #EAE2D4;
+  --divider-linen: #F0E9DC;
+  --table-rule: #EDE8E0;
+  --tan-rule: #D4B896;
+
+  /* depth */
+  --shadow-paper: 0 8px 40px rgba(60,45,20,0.14);
+  --shadow-table: 0 2px 16px rgba(0,0,0,0.08);
+  --shadow-docked: 0 -4px 20px rgba(60,45,20,0.12);
+  --glow-hover: 0 2px 8px rgba(232,130,12,0.25);
+  --glow-tab: 0 2px 6px rgba(232,130,12,0.35);
+  --focus-halo: 0 0 0 3px rgba(232,130,12,0.22);
+}
+
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
-body { background: #FAF7F2; font-family: 'DM Sans', Arial, sans-serif; }
-a { color: #C46D08; text-decoration: none; }
-a:hover { color: #E8820C; }
+body { background: var(--cream-paper); font-family: 'DM Sans', Arial, sans-serif; }
+a { color: var(--burnt-ginger); text-decoration: none; }
+a:hover { color: var(--burnt-ginger-deep); }
 input, select, button { font-family: 'DM Sans', Arial, sans-serif; }
 @keyframes chipPop { 0% { transform: scale(1); } 40% { transform: scale(1.12); } 100% { transform: scale(1); } }
 input[type="date"] { min-width: 0; }
+/* Headings are styled inline; drop the browser's default heading margins. */
+h1, h2 { margin: 0; }
+/* Long unbroken text (descriptions, emails, big amounts) wraps instead of
+   spilling into the next invoice column or being clipped by the table. */
+#invoice-page { overflow-wrap: anywhere; }

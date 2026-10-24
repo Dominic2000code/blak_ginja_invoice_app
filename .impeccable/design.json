@@ -1,0 +1,631 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-23T22:41:17+00:00",
+  "title": "Design System: Blak Ginja Invoice Creator",
+  "extensions": {
+    "colorMeta": {
+      "ginger-root": {
+        "role": "primary",
+        "displayName": "Ginger Root",
+        "canonical": "oklch(66.6% 0.157 58.3)",
+        "cssVar": "--ginger-root",
+        "tonalRamp": [
+          "#1F0C00",
+          "#3F2003",
+          "#643504",
+          "#934F04",
+          "#C66B02",
+          "#F38E32",
+          "#FDC398",
+          "#FDEBDD"
+        ]
+      },
+      "burnt-ginger": {
+        "role": "primary",
+        "displayName": "Burnt Ginger",
+        "canonical": "oklch(54.2% 0.130 57.6)",
+        "cssVar": "--burnt-ginger",
+        "tonalRamp": [
+          "#1F0C01",
+          "#401F01",
+          "#653401",
+          "#934F0B",
+          "#BF6F28",
+          "#E89451",
+          "#FFC396",
+          "#FCEBDE"
+        ]
+      },
+      "burnt-ginger-deep": {
+        "role": "primary",
+        "displayName": "Burnt Ginger Deep",
+        "canonical": "oklch(46.6% 0.112 57.2)",
+        "cssVar": "--burnt-ginger-deep",
+        "tonalRamp": [
+          "#1F0C00",
+          "#411F00",
+          "#643406",
+          "#925012",
+          "#B8733C",
+          "#E09861",
+          "#FEC399",
+          "#FEEADD"
+        ]
+      },
+      "garden-leaf": {
+        "role": "secondary",
+        "displayName": "Garden Leaf",
+        "canonical": "oklch(47.6% 0.123 135.7)",
+        "cssVar": "--garden-leaf",
+        "tonalRamp": [
+          "#061600",
+          "#143100",
+          "#254E05",
+          "#417222",
+          "#639748",
+          "#87BC6C",
+          "#ADE491",
+          "#D0FFB9"
+        ]
+      },
+      "ledger-ink": {
+        "role": "neutral",
+        "displayName": "Ledger Ink",
+        "canonical": "oklch(22.6% 0.000 89.9)",
+        "cssVar": "--ledger-ink",
+        "tonalRamp": [
+          "#121212",
+          "#292929",
+          "#424242",
+          "#636363",
+          "#868686",
+          "#ABABAB",
+          "#D1D1D1",
+          "#EEEEEE"
+        ]
+      },
+      "field-loam": {
+        "role": "neutral",
+        "displayName": "Field Loam",
+        "canonical": "oklch(45.0% 0.021 89.5)",
+        "cssVar": "--field-loam",
+        "tonalRamp": [
+          "#151107",
+          "#2D281D",
+          "#474235",
+          "#686356",
+          "#8B8678",
+          "#B0AA9C",
+          "#D6D1C2",
+          "#F4EEDF"
+        ]
+      },
+      "smoke-on-ink": {
+        "role": "neutral",
+        "displayName": "Smoke On Ink",
+        "canonical": "oklch(83.6% 0.019 78.2)",
+        "cssVar": "--smoke-on-ink",
+        "tonalRamp": [
+          "#161108",
+          "#2E281F",
+          "#484137",
+          "#696258",
+          "#8C857A",
+          "#B1AA9E",
+          "#D8D0C4",
+          "#F6EDE1"
+        ]
+      },
+      "sheet-white": {
+        "role": "neutral",
+        "displayName": "Sheet White",
+        "canonical": "oklch(100.0% 0.000 89.9)",
+        "cssVar": "--sheet-white",
+        "tonalRamp": [
+          "#121212",
+          "#292929",
+          "#424242",
+          "#636363",
+          "#868686",
+          "#ABABAB",
+          "#D1D1D1",
+          "#EEEEEE"
+        ]
+      },
+      "cream-paper": {
+        "role": "neutral",
+        "displayName": "Cream Paper",
+        "canonical": "oklch(97.7% 0.007 80.7)",
+        "cssVar": "--cream-paper",
+        "tonalRamp": [
+          "#13110E",
+          "#2B2925",
+          "#44423E",
+          "#65635F",
+          "#888681",
+          "#ADAAA6",
+          "#D3D0CC",
+          "#F1EEE9"
+        ]
+      },
+      "counter-linen": {
+        "role": "neutral",
+        "displayName": "Counter Linen",
+        "canonical": "oklch(94.7% 0.014 84.6)",
+        "cssVar": "--counter-linen",
+        "tonalRamp": [
+          "#15110A",
+          "#2C2821",
+          "#46423A",
+          "#67635A",
+          "#8A867D",
+          "#AFAAA1",
+          "#D5D0C7",
+          "#F3EEE4"
+        ]
+      },
+      "mode-track": {
+        "role": "neutral",
+        "displayName": "Mode Track",
+        "canonical": "oklch(95.1% 0.016 82.8)",
+        "cssVar": "--mode-track",
+        "tonalRamp": [
+          "#151109",
+          "#2D2820",
+          "#474239",
+          "#686359",
+          "#8B857C",
+          "#B0AAA0",
+          "#D6D0C5",
+          "#F4EEE3"
+        ]
+      },
+      "ginger-wash": {
+        "role": "neutral",
+        "displayName": "Ginger Wash",
+        "canonical": "oklch(96.8% 0.024 79.7)",
+        "cssVar": "--ginger-wash",
+        "tonalRamp": [
+          "#171006",
+          "#2F281C",
+          "#494134",
+          "#6B6254",
+          "#8E8576",
+          "#B3A99A",
+          "#D9D0C0",
+          "#F7EDDD"
+        ]
+      },
+      "leaf-wash": {
+        "role": "neutral",
+        "displayName": "Leaf Wash",
+        "canonical": "oklch(96.1% 0.019 130.2)",
+        "cssVar": "--leaf-wash",
+        "tonalRamp": [
+          "#0F130B",
+          "#262B21",
+          "#3F453A",
+          "#60665A",
+          "#82897D",
+          "#A7ADA1",
+          "#CDD4C7",
+          "#EAF1E4"
+        ]
+      },
+      "leaf-rule": {
+        "role": "neutral",
+        "displayName": "Leaf Rule",
+        "canonical": "oklch(87.2% 0.055 131.7)",
+        "cssVar": "--leaf-rule",
+        "tonalRamp": [
+          "#091600",
+          "#1F2E10",
+          "#384829",
+          "#586A49",
+          "#7A8D6B",
+          "#9EB38F",
+          "#C4D9B4",
+          "#E1F7D1"
+        ]
+      },
+      "row-blush": {
+        "role": "neutral",
+        "displayName": "Row Blush",
+        "canonical": "oklch(98.6% 0.007 80.7)",
+        "cssVar": "--row-blush",
+        "tonalRamp": [
+          "#13110E",
+          "#2B2925",
+          "#44423E",
+          "#65635F",
+          "#888681",
+          "#ADAAA6",
+          "#D3D0CC",
+          "#F1EEE9"
+        ]
+      },
+      "husk-border": {
+        "role": "neutral",
+        "displayName": "Husk Border",
+        "canonical": "oklch(88.9% 0.025 81.1)",
+        "cssVar": "--husk-border",
+        "tonalRamp": [
+          "#171005",
+          "#2F281A",
+          "#494133",
+          "#6B6253",
+          "#8E8575",
+          "#B3AA99",
+          "#DAD0BF",
+          "#F7EDDC"
+        ]
+      },
+      "field-edge": {
+        "role": "neutral",
+        "displayName": "Field Edge",
+        "canonical": "oklch(64.2% 0.032 80.6)",
+        "cssVar": "--field-edge",
+        "tonalRamp": [
+          "#191002",
+          "#312716",
+          "#4B412F",
+          "#6D624F",
+          "#908471",
+          "#B6A994",
+          "#DCCFBA",
+          "#FAEDD7"
+        ]
+      },
+      "pale-husk": {
+        "role": "neutral",
+        "displayName": "Pale Husk",
+        "canonical": "oklch(91.5% 0.021 81.8)",
+        "cssVar": "--pale-husk",
+        "tonalRamp": [
+          "#161107",
+          "#2E281D",
+          "#484136",
+          "#696256",
+          "#8C8578",
+          "#B1AA9D",
+          "#D8D0C2",
+          "#F6EDDF"
+        ]
+      },
+      "divider-linen": {
+        "role": "neutral",
+        "displayName": "Divider Linen",
+        "canonical": "oklch(93.6% 0.019 83.1)",
+        "cssVar": "--divider-linen",
+        "tonalRamp": [
+          "#161108",
+          "#2D281E",
+          "#474237",
+          "#686257",
+          "#8C857A",
+          "#B1AA9E",
+          "#D7D0C3",
+          "#F5EEE1"
+        ]
+      },
+      "table-rule": {
+        "role": "neutral",
+        "displayName": "Table Rule",
+        "canonical": "oklch(93.3% 0.012 79.8)",
+        "cssVar": "--table-rule",
+        "tonalRamp": [
+          "#14110C",
+          "#2C2822",
+          "#46423B",
+          "#67635C",
+          "#8A857E",
+          "#AFAAA3",
+          "#D5D0C8",
+          "#F3EEE6"
+        ]
+      },
+      "tan-rule": {
+        "role": "neutral",
+        "displayName": "Tan Rule",
+        "canonical": "oklch(79.8% 0.056 72.3)",
+        "cssVar": "--tan-rule",
+        "tonalRamp": [
+          "#1B0F01",
+          "#3A2403",
+          "#553D1F",
+          "#775E3F",
+          "#9B8161",
+          "#C1A684",
+          "#E8CCA9",
+          "#FEEBD5"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The INVOICE title only, in Ginger Root."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Blak Ginja wordmark on the invoice."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Client name in Bill To and the Total row."
+      },
+      "wordmark-sm": {
+        "displayName": "Wordmark (small)",
+        "purpose": "Editor header wordmark (h1)."
+      },
+      "closing": {
+        "displayName": "Closing",
+        "purpose": "Thank-you line under the payment block."
+      },
+      "item-title": {
+        "displayName": "Item title",
+        "purpose": "Bar package names on the invoice."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Table rows and general copy; 1.6 line-height on the invoice."
+      },
+      "body-sm": {
+        "displayName": "Body Small",
+        "purpose": "Inputs, chips and dense editor rows (13–13.5px)."
+      },
+      "field-label": {
+        "displayName": "Field label",
+        "purpose": "Labels above editor inputs."
+      },
+      "touch-input": {
+        "displayName": "Touch input",
+        "purpose": "Field text on touch screens (prevents iOS focus zoom)."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Uppercase tracked section labels, table header and invoice block labels."
+      },
+      "caption": {
+        "displayName": "Caption",
+        "purpose": "Uppercase field captions inside cards and category labels (11px floor)."
+      },
+      "marker": {
+        "displayName": "Marker",
+        "purpose": "Decorative ▼ before discount lines only."
+      }
+    },
+    "shadows": [
+      {
+        "name": "shadow-paper",
+        "value": "0 8px 40px rgba(60,45,20,0.14)",
+        "purpose": "The invoice sheet resting on the linen counter."
+      },
+      {
+        "name": "shadow-table",
+        "value": "0 2px 16px rgba(0,0,0,0.08)",
+        "purpose": "Soft halo around the invoice line-item table."
+      },
+      {
+        "name": "shadow-docked",
+        "value": "0 -4px 20px rgba(60,45,20,0.12)",
+        "purpose": "Action bar fixed to the bottom on narrow screens."
+      },
+      {
+        "name": "glow-hover",
+        "value": "0 2px 8px rgba(232,130,12,0.25)",
+        "purpose": "Chips on hover, with a 1px upward lift."
+      },
+      {
+        "name": "glow-tab",
+        "value": "0 2px 6px rgba(232,130,12,0.35)",
+        "purpose": "Selected mode tab."
+      },
+      {
+        "name": "focus-halo",
+        "value": "0 0 0 3px rgba(232,130,12,0.22)",
+        "purpose": "Focus halo on every editor field and select."
+      }
+    ],
+    "motion": [
+      {
+        "name": "state-fade",
+        "value": "0.2s ease",
+        "purpose": "Background, border, color and shadow changes on hover/active."
+      },
+      {
+        "name": "chip-lift",
+        "value": "transform 0.15s ease",
+        "purpose": "Chip hover lift and press shrink (scale 0.92); removed under prefers-reduced-motion."
+      },
+      {
+        "name": "chip-pop",
+        "value": "chipPop 0.35s ease (scale 1 → 1.12 → 1)",
+        "purpose": "Confirms a catalog item was added, with a 0.7s leaf flash. Under reduced motion the pop is removed and the flash stays."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "stack",
+        "value": "980px",
+        "purpose": "Viewport: editor and preview stack; action bar docks to the bottom with safe-area padding."
+      },
+      {
+        "name": "sheet-fill",
+        "value": "793px (container: #preview-wrap)",
+        "purpose": "Preview panel narrower than A4: the invoice fills the panel (28px x 22px padding)."
+      },
+      {
+        "name": "compact",
+        "value": "619px (container: #preview-wrap)",
+        "purpose": "Readable reflow: stacked header, item rows with a 'qty x rate · size' line, full-width totals."
+      },
+      {
+        "name": "narrow-phone",
+        "value": "400px",
+        "purpose": "Custom-item row wraps onto two lines."
+      },
+      {
+        "name": "touch",
+        "value": "(pointer: coarse)",
+        "purpose": "44px targets and 16px field text."
+      },
+      {
+        "name": "pdf",
+        "value": "794px",
+        "purpose": "A4 at 96dpi; the PDF always renders at this width, never with container rules."
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Main action-bar call to action (Download PDF); one per area. White on Burnt Ginger, 5.2:1.",
+      "html": "<button class=\"ds-btn-primary\">Download PDF</button>",
+      "css": ".ds-btn-primary { font-family: 'DM Sans', Arial, sans-serif; background: var(--burnt-ginger, #A65800); color: var(--sheet-white, #FFFFFF); border: none; border-radius: 8px; padding: 13px 16px; font-size: 14.5px; font-weight: 600; letter-spacing: 0.2px; cursor: pointer; min-width: 220px; transition: background 0.2s ease; } .ds-btn-primary:hover { background: var(--burnt-ginger-deep, #874600); } .ds-btn-primary:focus-visible { outline: 2px solid var(--burnt-ginger, #A65800); outline-offset: 2px; } .ds-btn-primary:disabled { opacity: 0.7; cursor: default; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Quiet companion actions: Print, + Fixed amount, + Add another package.",
+      "html": "<button class=\"ds-btn-secondary\">+ Fixed amount</button>",
+      "css": ".ds-btn-secondary { font-family: 'DM Sans', Arial, sans-serif; background: var(--sheet-white, #FFFFFF); color: var(--ledger-ink, #1C1C1C); border: 1px solid var(--tan-rule, #D4B896); border-radius: 6px; padding: 7px 12px; font-size: 12.5px; font-weight: 500; cursor: pointer; transition: background 0.2s ease, border-color 0.2s ease; } .ds-btn-secondary:hover { background: var(--ginger-wash, #FDF3E3); border-color: var(--ginger-root, #D97706); } .ds-btn-secondary:focus-visible { outline: 2px solid var(--burnt-ginger, #A65800); outline-offset: 2px; }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Labelled editor field: Field Edge stroke (3:1), Burnt Ginger border plus ginger halo on focus.",
+      "html": "<label class=\"ds-field\"><span class=\"ds-field-label\">Client name</span><input class=\"ds-input\" placeholder=\"Client or company name\"></label>",
+      "css": ".ds-field { display: block; width: 260px; font-family: 'DM Sans', Arial, sans-serif; } .ds-field-label { display: block; font-size: 12px; font-weight: 500; color: var(--field-loam, #5A5548); margin-bottom: 4px; } .ds-input { width: 100%; box-sizing: border-box; font-family: inherit; padding: 8px 10px; border: 1px solid var(--field-edge, #978B77); border-radius: 6px; font-size: 13.5px; color: var(--ledger-ink, #1C1C1C); background: var(--sheet-white, #FFFFFF); outline: none; transition: border-color 0.2s ease, box-shadow 0.2s ease; } .ds-input::placeholder { color: #8B8678; } .ds-input:focus, .ds-input:focus-visible { border-color: var(--burnt-ginger, #A65800); box-shadow: var(--focus-halo, 0 0 0 3px rgba(232,130,12,0.22)); }"
+    },
+    {
+      "name": "Catalog Chip",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "One-click add for catalog items; lifts with a ginger glow on hover (no lift under reduced motion).",
+      "html": "<div class=\"ds-chips\"><button class=\"ds-chip\">Sobolo</button><button class=\"ds-chip\">Pineapple &amp; Ginger</button><button class=\"ds-chip ds-flash\">Kulikuli</button></div>",
+      "css": ".ds-chips { display: flex; flex-wrap: wrap; gap: 6px; } .ds-chip { font-family: 'DM Sans', Arial, sans-serif; padding: 5px 12px; border: 1px solid var(--husk-border, #E3D9C8); border-radius: 999px; background: var(--sheet-white, #FFFFFF); color: var(--ledger-ink, #1C1C1C); font-size: 12.5px; cursor: pointer; transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease; } .ds-chip:hover { border-color: var(--ginger-root, #D97706); color: var(--burnt-ginger, #A65800); background: var(--ginger-wash, #FDF3E3); transform: translateY(-1px); box-shadow: var(--glow-hover, 0 2px 8px rgba(232,130,12,0.25)); } .ds-chip:focus-visible { outline: 2px solid var(--burnt-ginger, #A65800); outline-offset: 2px; } .ds-chip:active { transform: scale(0.92); } .ds-chip.ds-flash, .ds-chip.ds-flash:hover { background: var(--leaf-wash, #EEF5E8); border-color: var(--garden-leaf, #3A6B1A); color: var(--garden-leaf, #3A6B1A); } @media (prefers-reduced-motion: reduce) { .ds-chip { transition: background 0.2s ease, border-color 0.2s ease; } .ds-chip:hover, .ds-chip:active { transform: none; } }"
+    },
+    {
+      "name": "Include Chip (selected)",
+      "kind": "chip",
+      "refersTo": "chip-selected",
+      "description": "Bar package toggle chip; leaf-green with a check when included.",
+      "html": "<div class=\"ds-chips\"><button class=\"ds-chip-toggle ds-on\" aria-pressed=\"true\">✓ Bar setup</button><button class=\"ds-chip-toggle\" aria-pressed=\"false\">Transport</button></div>",
+      "css": ".ds-chips { display: flex; flex-wrap: wrap; gap: 6px; } .ds-chip-toggle { font-family: 'DM Sans', Arial, sans-serif; padding: 5px 12px; border: 1px solid var(--husk-border, #E3D9C8); border-radius: 999px; background: var(--sheet-white, #FFFFFF); color: var(--ledger-ink, #1C1C1C); font-size: 12.5px; cursor: pointer; transition: transform 0.15s ease, border-color 0.2s ease, box-shadow 0.2s ease; } .ds-chip-toggle.ds-on { background: var(--leaf-wash, #EEF5E8); border-color: var(--garden-leaf, #3A6B1A); color: var(--garden-leaf, #3A6B1A); font-weight: 600; } .ds-chip-toggle:hover { border-color: var(--ginger-root, #D97706); transform: translateY(-1px); box-shadow: var(--glow-hover, 0 2px 8px rgba(232,130,12,0.25)); } .ds-chip-toggle:focus-visible { outline: 2px solid var(--burnt-ginger, #A65800); outline-offset: 2px; }"
+    },
+    {
+      "name": "Mode Toggle",
+      "kind": "nav",
+      "refersTo": "mode-tab-active",
+      "description": "Bulk order / Mobile bar segmented control on a recessed linen track.",
+      "html": "<div class=\"ds-mode\" role=\"group\"><button class=\"ds-mode-tab ds-active\" aria-pressed=\"true\">Bulk order</button><button class=\"ds-mode-tab\" aria-pressed=\"false\">Mobile bar</button></div>",
+      "css": ".ds-mode { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; width: 320px; background: var(--mode-track, #F4EEE3); border-radius: 10px; padding: 4px; } .ds-mode-tab { font-family: 'DM Sans', Arial, sans-serif; padding: 9px 10px; border: none; border-radius: 7px; background: transparent; color: var(--field-loam, #5A5548); font-size: 13.5px; font-weight: 600; cursor: pointer; transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease; } .ds-mode-tab:hover { color: var(--ledger-ink, #1C1C1C); } .ds-mode-tab:focus-visible { outline: 2px solid var(--burnt-ginger, #A65800); outline-offset: 2px; } .ds-mode-tab.ds-active { background: var(--burnt-ginger, #A65800); color: var(--sheet-white, #FFFFFF); box-shadow: var(--glow-tab, 0 2px 6px rgba(232,130,12,0.35)); }"
+    },
+    {
+      "name": "Line-item Card",
+      "kind": "card",
+      "refersTo": "",
+      "description": "Flat editor card for one item: description, live amount, labelled Qty/Size/Rate (11px captions).",
+      "html": "<div class=\"ds-item\"><div class=\"ds-item-top\"><input class=\"ds-item-desc\" value=\"Sobolo\" aria-label=\"Item description\"><span class=\"ds-item-amt\">₵300.00</span><button class=\"ds-x\" aria-label=\"Remove\">×</button></div><div class=\"ds-item-row\"><label class=\"ds-cap ds-qty\">Qty<input value=\"12\"></label><label class=\"ds-cap\">Size<select><option>1.5L</option></select></label><label class=\"ds-cap\">Rate (₵)<input value=\"25\" style=\"text-align:right\"></label></div></div>",
+      "css": ".ds-item { width: 380px; font-family: 'DM Sans', Arial, sans-serif; border: 1px solid var(--divider-linen, #F0E9DC); border-radius: 8px; padding: 8px; background: var(--sheet-white, #FFFFFF); } .ds-item-top { display: grid; grid-template-columns: minmax(0,1fr) auto 24px; gap: 8px; align-items: center; } .ds-item input, .ds-item select { width: 100%; box-sizing: border-box; font-family: inherit; padding: 7px 9px; border: 1px solid var(--field-edge, #978B77); border-radius: 6px; font-size: 13px; color: var(--ledger-ink, #1C1C1C); background: var(--sheet-white, #FFFFFF); outline: none; } .ds-item input:focus, .ds-item select:focus { border-color: var(--burnt-ginger, #A65800); box-shadow: var(--focus-halo, 0 0 0 3px rgba(232,130,12,0.22)); } .ds-item-desc { font-weight: 500; } .ds-item-amt { font-size: 13px; font-weight: 600; color: var(--ledger-ink, #1C1C1C); } .ds-x { width: 24px; height: 24px; border: none; border-radius: 50%; background: transparent; color: var(--field-loam, #5A5548); font-size: 16px; line-height: 1; cursor: pointer; padding: 0; } .ds-x:hover { background: var(--ginger-wash, #FDF3E3); color: var(--burnt-ginger, #A65800); } .ds-x:focus-visible { outline: 2px solid var(--burnt-ginger, #A65800); outline-offset: 2px; } .ds-item-row { display: flex; gap: 6px; margin-top: 6px; } .ds-cap { flex: 1; display: flex; flex-direction: column; gap: 3px; font-size: 11px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; color: var(--field-loam, #5A5548); } .ds-qty { flex: 0 0 64px; }"
+    },
+    {
+      "name": "Invoice Totals",
+      "kind": "custom",
+      "refersTo": "invoice-sheet",
+      "description": "Signature ledger totals: tan rule, leaf discounts, Playfair Total in Burnt Ginger over a Ginger Root rule.",
+      "html": "<div class=\"ds-totals\"><div class=\"ds-tl\"><span>Subtotal</span><span>₵358.00</span></div><div class=\"ds-tl ds-disc\"><span>Percentage discount</span><span>−₵35.80</span></div><div class=\"ds-total\"><span>Total</span><span>₵322.20</span></div></div>",
+      "css": ".ds-totals { width: 290px; font-family: 'DM Sans', Arial, sans-serif; border-top: 2px solid var(--tan-rule, #D4B896); padding-top: 14px; background: var(--sheet-white, #FFFFFF); } .ds-tl { display: flex; justify-content: space-between; padding: 5px 0; font-size: 14px; color: var(--field-loam, #5A5548); } .ds-disc { color: var(--garden-leaf, #3A6B1A); font-weight: 500; } .ds-total { display: flex; justify-content: space-between; margin-top: 12px; padding-top: 14px; border-top: 2px solid var(--ginger-root, #D97706); font-family: 'Playfair Display', Georgia, serif; font-size: 20px; font-weight: 700; color: var(--ledger-ink, #1C1C1C); } .ds-total span:last-child { color: var(--burnt-ginger, #A65800); }"
+    },
+    {
+      "name": "Invoice Table (compact)",
+      "kind": "custom",
+      "refersTo": "table-header",
+      "description": "Ink header bar, leaf group row and a phone-width item row with its 'qty × rate · size' line.",
+      "html": "<div class=\"ds-table\"><div class=\"ds-th\"><span class=\"ds-grow\">Description</span><span>Amount</span></div><div class=\"ds-group\"><span class=\"ds-dot\">●</span>Drinks</div><div class=\"ds-tr\"><span class=\"ds-grow\">Sobolo</span><b>₵300.00</b><span class=\"ds-line\">12 × ₵25.00 · 1.5L</span></div></div>",
+      "css": ".ds-table { width: 340px; font-family: 'DM Sans', Arial, sans-serif; border-radius: 8px; overflow: hidden; box-shadow: var(--shadow-table, 0 2px 16px rgba(0,0,0,0.08)); background: var(--sheet-white, #FFFFFF); font-size: 14px; } .ds-th { display: flex; gap: 16px; padding: 13px 16px; background: var(--ledger-ink, #1C1C1C); color: var(--sheet-white, #FFFFFF); font-size: 11px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; } .ds-grow { flex: 1; } .ds-group { background: var(--leaf-wash, #EEF5E8); color: var(--garden-leaf, #3A6B1A); font-size: 11px; font-weight: 600; letter-spacing: 1.8px; text-transform: uppercase; padding: 9px 16px; border-bottom: 1px solid var(--leaf-rule, #C8DDB8); } .ds-dot { color: var(--ginger-root, #D97706); margin-right: 8px; } .ds-tr { display: grid; grid-template-columns: minmax(0,1fr) auto; padding: 12px 16px; border-bottom: 1px solid var(--table-rule, #EDE8E0); color: var(--ledger-ink, #1C1C1C); } .ds-tr b { font-weight: 600; } .ds-line { grid-column: 1 / -1; font-size: 12.5px; color: var(--field-loam, #5A5548); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Market Ledger",
+    "overview": "**Creative North Star: \"The Market Ledger\"**\n\nBlak Ginja's invoice tool reads like a trusted trader's ledger: cream paper, ink-black rules, and ginger-orange marking whatever matters most. Everything serves one outcome, a clean A4 invoice a client can pay against, so the system's job is to be warm, trustworthy, crafted and efficient all at once. The warmth comes from the materials (cream, linen, husk and tan, never cool gray). The trust comes from document conventions: a firm wordmark, an all-caps INVOICE title, a black table header, ruled totals and a dark payment block. The craft comes from a Playfair Display serif for the brand voice, set against a quiet DM Sans for everything you read or type.\n\nThe surface is split in two: a dense white editor panel (440px) on the left, and the invoice preview on the right, set on a linen counter like a sheet of paper. The editor is compact and fast. Small type (12–13.5px), tight 6–10px gaps, uppercase section labels, and one-click item chips keep data entry quick. The invoice is spacious and formal, with 44px by 48px margins and larger serif display type. The editor is the working counter; the invoice is the finished page.\n\nThis system is never corporate SaaS (no cool blue or gray chrome), never loud (no neon, gradients or glows beyond the soft ginger focus halo), and never cold monochrome. Removing the warmth removes the brand.",
+    "keyCharacteristics": [
+      "Warm neutrals everywhere: cream, linen, husk and tan instead of grays.",
+      "One accent voice, ginger, in two strengths: Burnt Ginger for action and readable emphasis, Ginger Root for display type, rules and marks. A second, botanical voice (Garden Leaf green) is reserved for categories, discounts and \"selected\".",
+      "Serif for the brand and the document's headings; sans for every working surface.",
+      "Flat editor, lifted paper invoice.",
+      "Uppercase, letter-spaced micro-labels organize the content in place of heavy dividers."
+    ],
+    "rules": [
+      {
+        "name": "The Readable Ginger Rule",
+        "body": "Orange text smaller than 24px (or 18.7px bold) is always Burnt Ginger. Ginger Root is for display type, rules and marks only.",
+        "section": "colors"
+      },
+      {
+        "name": "The Warm Neutral Rule",
+        "body": "Every neutral leans warm (yellow-brown hue, low chroma). A cool or pure gray anywhere in the UI is a bug.",
+        "section": "colors"
+      },
+      {
+        "name": "The Two Voices Rule",
+        "body": "Ginger marks action and money; Garden Leaf marks grouping, discounts and selection. Never swap them, and never add a third accent.",
+        "section": "colors"
+      },
+      {
+        "name": "The Serif Is the Signature Rule",
+        "body": "Playfair appears only on brand and document moments: the wordmark, INVOICE, the client name, the Total and the thank-you line. Never on controls, labels or form fields.",
+        "section": "typography"
+      },
+      {
+        "name": "The 11px Floor Rule",
+        "body": "No functional text is smaller than 11px. The only smaller glyph is the decorative ▼ before discount lines.",
+        "section": "typography"
+      },
+      {
+        "name": "The Small Caps Ledger Rule",
+        "body": "Organize content with uppercase, letter-spaced 10–11px labels rather than larger headings or extra dividers.",
+        "section": "typography"
+      },
+      {
+        "name": "The PDF Stays A4 Rule",
+        "body": "Restyle invoice content only through the preview container query, never with viewport media queries. The PDF is captured from a copy of the invoice that sits outside the preview panel, so container rules never reach it and every PDF keeps the 794px layout, whatever device made it.",
+        "section": "layout"
+      },
+      {
+        "name": "The A4 Sheet Rule",
+        "body": "The invoice is designed at 794px (A4 at 96dpi) and is exported to PDF exactly as rendered. Any new invoice content must fit that width without horizontal overflow.",
+        "section": "layout"
+      },
+      {
+        "name": "The One Sheet Rule",
+        "body": "Only the invoice is elevated at rest. Everything in the editor is flat until hovered or focused.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** keep every neutral warm; pick from Cream Paper, Counter Linen, Husk Border, Tan Rule and Field Loam before inventing a new gray.",
+      "**Do** use Burnt Ginger (#A65800) for the one primary action per area, for money emphasis and whenever orange has to be read as text; keep Ginger Root (#D97706) for display type, rules and marks.",
+      "**Do** use Garden Leaf (#3A6B1A) for categories, discounts and selected states.",
+      "**Do** label editor sections with 11px uppercase 600-weight Burnt Ginger labels tracked at +1.6px.",
+      "**Do** keep the invoice at 794px wide with 44px by 48px padding, so the PDF matches the preview.",
+      "**Do** confirm additions with the leaf flash or ✓ state rather than toasts or modals.",
+      "**Do** reference colors and shadows through the CSS variables in `css/base.css` (`var(--burnt-ginger)`, `var(--shadow-paper)`), never raw hex. The only literal colors are the theme-color meta tag and html2canvas's `backgroundColor` option, which can't read variables."
+    ],
+    "donts": [
+      "**Don't** introduce corporate SaaS blue or cool-gray chrome.",
+      "**Don't** go loud: no neon, saturated gradients or glows beyond the existing soft ginger halos.",
+      "**Don't** drain the palette to cold black, white and gray monochrome; the warmth is the brand.",
+      "**Don't** put Playfair Display on buttons, inputs or labels; it belongs to the brand and the document.",
+      "**Don't** add shadows to editor cards or controls at rest; only the invoice sheet is lifted.",
+      "**Don't** add a third accent color, or swap the ginger and leaf roles.",
+      "**Don't** restyle invoice content with viewport media queries; use the `#preview-wrap` container query (see The PDF Stays A4 Rule).",
+      "**Don't** set functional text below 11px."
+    ]
+  }
+}

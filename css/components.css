@@ -1,39 +1,69 @@
-/* Focus states (ported from prototype style-focus) */
-.inp:focus { border-color: #E8820C; box-shadow: 0 0 0 3px rgba(232,130,12,0.14); }
-.inp-sm:focus { border-color: #E8820C; }
+/* Field edges need 3:1 against the panel (WCAG 1.4.11), so fields and selects get
+   a darker warm stroke than the decorative husk border. The custom-size box keeps
+   its own Burnt Ginger border. !important beats the inline border. */
+#editor-panel input:not([data-field="size"]),
+#editor-panel select {
+  border-color: var(--field-edge) !important;
+}
+
+/* Focus states. Every editor field and select gets the same visible focus.
+   !important is needed because the fields carry inline border/outline styles. */
+#editor-panel input:focus,
+#editor-panel select:focus {
+  border-color: var(--burnt-ginger) !important;
+  box-shadow: var(--focus-halo) !important;
+}
+#editor-panel button:focus-visible,
+#invoice-page a:focus-visible {
+  outline: 2px solid var(--burnt-ginger);
+  outline-offset: 2px;
+}
 
 /* Catalog chips (ported from prototype style-hover / style-active / flash) */
 .chip {
-  padding: 5px 12px; border: 1px solid #E3D9C8; border-radius: 999px;
-  background: #FFFFFF; color: #1C1C1C; font-size: 12.5px; cursor: pointer;
+  padding: 5px 12px; border: 1px solid var(--husk-border); border-radius: 999px;
+  background: var(--sheet-white); color: var(--ledger-ink); font-size: 12.5px; cursor: pointer;
   transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
-.chip.flash { background: #EEF5E8; border-color: #3A6B1A; color: #3A6B1A; animation: chipPop 0.35s ease; }
-.chip:hover {
-  border-color: #E8820C; color: #C46D08; background: #FDF3E3;
-  transform: translateY(-1px); box-shadow: 0 2px 8px rgba(232,130,12,0.25);
+/* .chip.flash:hover too, so the "added" flash isn't hidden by the hover style
+   while the mouse is still over the chip you just clicked */
+.chip.flash, .chip.flash:hover { background: var(--leaf-wash); border-color: var(--garden-leaf); color: var(--garden-leaf); animation: chipPop 0.35s ease; }
+/* Hover styles only where a real pointer hovers; on touch they would stick after a tap. */
+@media (hover: hover) {
+  .chip:hover {
+    border-color: var(--ginger-root); color: var(--burnt-ginger); background: var(--ginger-wash);
+    transform: translateY(-1px); box-shadow: var(--glow-hover);
+  }
 }
 .chip:active { transform: scale(0.92); }
 
 /* Buttons (ported from prototype style-hover) */
-.btn-add { padding: 8px 14px; border: none; border-radius: 6px; background: #E8820C; color: #FFFFFF; font-size: 13px; font-weight: 600; cursor: pointer; }
-.btn-add:hover { background: #C46D08; }
-.btn-disc { padding: 7px 12px; border: 1px solid #D4B896; border-radius: 6px; background: #FFFFFF; color: #1C1C1C; font-size: 12.5px; font-weight: 500; cursor: pointer; }
-.btn-disc:hover { background: #FDF3E3; border-color: #E8820C; }
-.btn-x { width: 24px; height: 24px; border: none; border-radius: 50%; background: transparent; color: #5A5548; font-size: 16px; line-height: 1; cursor: pointer; padding: 0; }
-.btn-x:hover { background: #FDF3E3; color: #C46D08; }
-.btn-pdf { flex: 1; background: #E8820C; color: #FFFFFF; border: none; border-radius: 8px; padding: 13px 16px; font-size: 14.5px; font-weight: 600; cursor: pointer; letter-spacing: 0.2px; }
-.btn-pdf:hover { background: #C46D08; }
+.btn-add { padding: 8px 14px; border: none; border-radius: 6px; background: var(--burnt-ginger); color: var(--sheet-white); font-size: 13px; font-weight: 600; cursor: pointer; }
+.btn-add:hover { background: var(--burnt-ginger-deep); }
+.btn-disc { padding: 7px 12px; border: 1px solid var(--tan-rule); border-radius: 6px; background: var(--sheet-white); color: var(--ledger-ink); font-size: 12.5px; font-weight: 500; cursor: pointer; }
+.btn-disc:hover { background: var(--ginger-wash); border-color: var(--ginger-root); }
+.btn-x { width: 24px; height: 24px; border: none; border-radius: 50%; background: transparent; color: var(--field-loam); font-size: 16px; line-height: 1; cursor: pointer; padding: 0; }
+.btn-x:hover { background: var(--ginger-wash); color: var(--burnt-ginger); }
+.btn-pdf { flex: 1; background: var(--burnt-ginger); color: var(--sheet-white); border: none; border-radius: 8px; padding: 13px 16px; font-size: 14.5px; font-weight: 600; cursor: pointer; letter-spacing: 0.2px; }
+.btn-pdf:hover { background: var(--burnt-ginger-deep); }
 .btn-pdf:disabled { opacity: 0.7; cursor: default; }
-.btn-print { background: #FFFFFF; color: #1C1C1C; border: 1px solid #D4B896; border-radius: 8px; padding: 13px 18px; font-size: 14.5px; font-weight: 500; cursor: pointer; }
-.btn-print:hover { background: #FDF3E3; }
+.btn-print { background: var(--sheet-white); color: var(--ledger-ink); border: 1px solid var(--tan-rule); border-radius: 8px; padding: 13px 18px; font-size: 14.5px; font-weight: 500; cursor: pointer; }
+.btn-print:hover { background: var(--ginger-wash); }
 
 /* Bulk order / Mobile bar mode toggle */
-.mode-tab { padding: 9px 10px; border: none; border-radius: 7px; background: transparent; color: #5A5548; box-shadow: none; font-size: 13.5px; font-weight: 600; cursor: pointer; transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease; }
-.mode-tab.active { background: #E8820C; color: #FFFFFF; box-shadow: 0 2px 6px rgba(232,130,12,0.35); }
+.mode-tab { padding: 9px 10px; border: none; border-radius: 7px; background: transparent; color: var(--field-loam); box-shadow: none; font-size: 13.5px; font-weight: 600; cursor: pointer; transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease; }
+.mode-tab.active { background: var(--burnt-ginger); color: var(--sheet-white); box-shadow: var(--glow-tab); }
 
 /* Bar package include toggles */
-.chip.toggle:hover { color: #1C1C1C; background: #FFFFFF; }
-.chip.toggle.on, .chip.toggle.on:hover { background: #EEF5E8; color: #3A6B1A; font-weight: 600; }
-.chip.toggle.on { border-color: #3A6B1A; }
-.chip.toggle.on:hover { border-color: #E8820C; }
+@media (hover: hover) { .chip.toggle:hover { color: var(--ledger-ink); background: var(--sheet-white); } }
+.chip.toggle.on, .chip.toggle.on:hover { background: var(--leaf-wash); color: var(--garden-leaf); font-weight: 600; }
+.chip.toggle.on { border-color: var(--garden-leaf); }
+@media (hover: hover) { .chip.toggle.on:hover { border-color: var(--ginger-root); } }
+
+/* Reduced motion: drop the movement (lift, press-shrink, pop) but keep the
+   colour feedback, so adding an item still flashes leaf green. */
+@media (prefers-reduced-motion: reduce) {
+  .chip { transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease; }
+  .chip.flash, .chip.flash:hover { animation: none; }
+  .chip:hover, .chip:active { transform: none; }
+}

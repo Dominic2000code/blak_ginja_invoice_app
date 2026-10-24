@@ -19,7 +19,7 @@ export function addDiscount(type) {
   state.discounts.push({
     id: uid(),
     label: type === 'percent' ? 'Percentage discount' : 'Discount',
-    type: type, value: ''
+    type: type, value: '', mode: state.mode
   });
   renderDiscounts();
   renderPreview();
@@ -34,6 +34,7 @@ export function setMode(m) {
   state.mode = m;
   writeMode(m);
   renderMode();
+  renderDiscounts();
   renderPreview();
 }
 

@@ -32,19 +32,38 @@ export function downloadPdf() {
       margin: [8, 0, 8, 0],
       filename: 'BlakGinja-Invoice-' + num + '.pdf',
       image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2, useCORS: true, backgroundColor: '#FFFFFF' },
+      // scrollX/scrollY 0: without these, html2canvas offsets the capture by the
+      // page scroll, and on phones (invoice below the editor) the PDF comes out blank.
+      // windowWidth 794 + x 0: html2pdf centres its A4 container in the window, so on
+      // wide screens the capture picked up a grey band from its overlay. Rendering in
+      // an A4-wide window with the crop at x 0 gives the same clean page on any screen.
+      html2canvas: { scale: 2, useCORS: true, backgroundColor: '#FFFFFF', scrollX: 0, scrollY: 0, windowWidth: 794, x: 0 },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
       pagebreak: { mode: ['css', 'legacy'] }
     };
     return html2pdf().set(opts).from(elp).save().then(() => {
-      const n = parseInt(num, 10);
-      if (!isNaN(n) && n > 0) writeLastNo(n);
+      recordInvoiceNo(num);
       setPdfBusy(false);
     });
   }).catch(() => {
     setPdfBusy(false);
-    alert('Could not create the PDF. Please use the Print button instead.');
+    alert(navigator.onLine === false
+      ? "You're offline and the PDF tool hasn't been downloaded yet. Use Print instead, or connect to the internet once and try Download PDF again."
+      : 'Could not create the PDF. Please use the Print button instead.');
   });
+}
+
+// Remember the issued invoice number so the next invoice starts one higher.
+// Uses the last run of digits, so "INV-007" and "2026-014" count as 7 and 14.
+export function recordInvoiceNo(invNo) {
+  const m = String(invNo || '').match(/(\d+)\D*$/);
+  const n = m ? parseInt(m[1], 10) : NaN;
+  if (!isNaN(n) && n > 0) writeLastNo(n);
+}
+
+export function printInvoice() {
+  window.print();
+  recordInvoiceNo((state.invNo || '').trim() || '001');
 }
 
 export function setPdfBusy(busy) {
