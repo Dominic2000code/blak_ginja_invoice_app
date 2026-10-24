@@ -5,7 +5,7 @@
   When you change any app file, bump CACHE_VERSION (v1 -> v2 -> ...).
   Old caches are cleared on activation, so visitors get the fresh version.
 */
-var CACHE_VERSION = 'blakginja-v3';
+var CACHE_VERSION = 'blakginja-v4';
 
 // Same-origin files that make up the app shell. These are pre-cached on install.
 // CDN files (the PDF library and Google Fonts) are cross-origin and get cached on
@@ -13,6 +13,22 @@ var CACHE_VERSION = 'blakginja-v3';
 var APP_SHELL = [
   './',
   './index.html',
+  './css/base.css',
+  './css/components.css',
+  './css/responsive.css',
+  './css/print.css',
+  './js/main.js',
+  './js/config.js',
+  './js/storage.js',
+  './js/state.js',
+  './js/utils.js',
+  './js/calc.js',
+  './js/actions.js',
+  './js/render/editor.js',
+  './js/render/preview.js',
+  './js/pdf.js',
+  './js/events.js',
+  './js/logo-fallback.js',
   './logo.png',
   './apple-touch-icon.png',
   './icon-192.png',
